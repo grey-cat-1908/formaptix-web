@@ -1,6 +1,6 @@
 <template>
   <div class="root" id="root">
-    <Header/>
+    <Header />
     <router-view v-slot="{ Component }">
       <div class="layout">
         <transition name="page" mode="out-in">
@@ -20,23 +20,23 @@ import Header from '@/components/Header.vue'
 .page-leave-active {
   transition-timing-function: ease;
   transition-delay: 15ms;
-  transition-duration: .15s;
+  transition-duration: 0.15s;
   transition-property: opacity;
-  overflow: hidden
+  overflow: hidden;
 }
 .page-enter-from,
 .page-leave-to {
-  opacity: 0
+  opacity: 0;
 }
 .root {
   display: flex;
   flex-direction: column;
-  min-height: 100vh
+  min-height: 100vh;
 }
 .layout {
   display: flex;
   flex-direction: column;
   width: 100%;
-  flex: 1
+  flex: 1;
 }
 </style>
