@@ -2,11 +2,11 @@
   <div class="selector-component">
     <div class="options">
       <div
-        v-for="(option, index) in options"
-        :key="index"
-        class="option"
-        @click="toggleSelection(index)"
-        :class="{ selected: isSelected(index) }"
+          v-for="(option, index) in options"
+          :key="index"
+          class="option"
+          @click="toggleSelection(index)"
+          :class="{ selected: isSelected(index) }"
       >
         <span>{{ option.label }}</span>
       </div>

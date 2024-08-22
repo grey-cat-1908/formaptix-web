@@ -1,10 +1,10 @@
 export function makeAPIRequest(
-  path: string = '',
-  method: string = 'GET',
-  query: any = {},
-  body: any = {},
-  useAuthorization: boolean = false
-): Promise<any> {
+    path: string = '',
+    method: string = 'GET',
+    query: any = {},
+    body: any = {},
+    useAuthorization: boolean = false
+): Promise < any > {
   return new Promise(async (resolve, _) => {
     let options: any = {
       method,
@@ -23,13 +23,18 @@ export function makeAPIRequest(
       finalPath += '?' + new URLSearchParams(query)
     }
 
-    const r = await fetch(finalPath, options)
-      .then((r) => r.json())
-      .catch((err) => {
-        console.error(err)
-        return resolve({ error: 'CRITICAL_ERROR' })
-      })
-
-    return resolve(r.data)
+    await fetch(finalPath, options)
+        .then(async (r) => {
+          return resolve({
+            json: await r.json(),
+            status: r.status
+          })
+        })
+        .catch((err) => {
+          console.error(err)
+          return resolve({
+            error: 'CRITICAL_ERROR'
+          })
+        })
   })
 }

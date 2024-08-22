@@ -9,7 +9,7 @@ const router = createRouter({
       component: () => import('@/views/Index.vue')
     },
     {
-      path: '/form/view',
+      path: '/form/view/:id',
       name: 'View Form',
       component: () => import('@/views/form/View.vue')
     }

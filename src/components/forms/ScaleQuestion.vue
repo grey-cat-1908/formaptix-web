@@ -7,16 +7,18 @@
     <div class="rating-options">
       <label v-for="n in range" :key="n" class="rating-option">
         <input
-          type="radio"
-          :value="n"
-          v-model="selectedValue"
-          :required="isRequired"
-          @change="updateValue"
+            type="radio"
+            :value="n"
+            v-model="selectedValue"
+            :required="isRequired"
+            @change="updateValue"
         />
         <span>{{ n }}</span>
       </label>
     </div>
-    <button v-if="selectedValue !== null" @click="cancelSelection">Отменить выбор</button>
+    <button v-if="selectedValue !== null" @click="cancelSelection">
+      Отменить выбор
+    </button>
   </div>
 </template>
 
@@ -54,7 +56,7 @@ const emit = defineEmits(['input'])
 const selectedValue = ref(props.value)
 
 const range = computed(() => {
-  return Array.from({ length: props.max - props.min + 1 }, (_, i) => props.min + i)
+  return Array.from({length: props.max - props.min + 1}, (_, i) => props.min + i)
 })
 
 function updateValue() {
