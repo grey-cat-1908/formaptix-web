@@ -12,7 +12,7 @@ export function makeAPIRequest(
         'Content-Type': 'application/json'
       }
     }
-    if (useAuthorization) options.headers.Authorization = `${localStorage.getItem('auth_token')}`
+    if (useAuthorization) options.headers['x-token'] = `${localStorage.getItem('auth_token')}`
 
     if (method !== 'GET') {
       options.body = JSON.stringify(body)
@@ -23,13 +23,18 @@ export function makeAPIRequest(
       finalPath += '?' + new URLSearchParams(query)
     }
 
-    const r = await fetch(finalPath, options)
-      .then((r) => r.json())
+    await fetch(finalPath, options)
+      .then(async (r) => {
+        return resolve({
+          json: await r.json(),
+          status: r.status
+        })
+      })
       .catch((err) => {
         console.error(err)
-        return resolve({ error: 'CRITICAL_ERROR' })
+        return resolve({
+          error: 'CRITICAL_ERROR'
+        })
       })
-
-    return resolve(r.data)
   })
 }
