@@ -41,7 +41,7 @@ async function submitForm() {
       <div class="login-space">
         <div class="login-card">
           <div class="login-card-title">
-            <h3 class="login-card-title--text">Войти</h3>
+            <h3 class="login-card-title--text">Войти в аккаунт</h3>
             <button @click="authStore.authDialogOpened = false">
               <PhX class="login-card-title--btn" :size="30" />
             </button>
@@ -135,7 +135,7 @@ async function submitForm() {
 
     &-title {
       font-weight: 400;
-      margin-bottom: 5px;
+      margin-bottom: 7px;
     }
 
     &-input {
@@ -143,6 +143,7 @@ async function submitForm() {
       background: var(--color-input-background);
       border: 1px solid var(--color-main-border);
       padding: 10px 20px;
+      font-weight: 200;
       border-radius: 0.5rem;
       outline: 0;
       transition: 0.25s ease;
@@ -152,7 +153,7 @@ async function submitForm() {
       }
 
       &:focus {
-        border: 1px solid var(--color-secondary-border);
+        border: 1px solid var(--color-third-border);
         background: var(--color-secondary-background);
       }
     }
