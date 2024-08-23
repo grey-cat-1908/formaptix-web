@@ -46,12 +46,12 @@ async function submitForm() {
       await prepareNewPage()
     } else {
       await makeAPIRequest(
-          '/answer/create',
-          'POST',
-          { form_id: Number(route.params.id) },
-          {
-            values: Array.from(Object.keys(answers.value).map((val) => answers.value[val]))
-          }
+        '/answer/create',
+        'POST',
+        { form_id: Number(route.params.id) },
+        {
+          values: Array.from(Object.keys(answers.value).map((val) => answers.value[val]))
+        }
       )
       isSent.value = true
     }
@@ -83,37 +83,35 @@ onMounted(async () => {
           <h3>{{ question.label }}</h3>
           <p>{{ question.description }}</p>
           <TextQuestion
-              v-if="question.question_type === 1"
-              :minLength="question.min_length"
-              :maxLength="question.max_length"
-              :validator="question.validator"
-              :isRequired="question.required"
-              v-model="answers[question.id].value"
-              @input="answers[question.id].value = $event"
+            v-if="question.question_type === 1"
+            :minLength="question.min_length"
+            :maxLength="question.max_length"
+            :validator="question.validator"
+            :isRequired="question.required"
+            v-model="answers[question.id].value"
+            @input="answers[question.id].value = $event"
           />
           <SelectorQuestion
-              v-if="question.question_type === 2"
-              :minValues="question.min_values"
-              :maxValues="question.max_values"
-              :options="question.options"
-              :isRequired="question.required"
-              v-model="answers[question.id].values"
-              @input="answers[question.id].values = $event"
+            v-if="question.question_type === 2"
+            :minValues="question.min_values"
+            :maxValues="question.max_values"
+            :options="question.options"
+            :isRequired="question.required"
+            v-model="answers[question.id].values"
+            @input="answers[question.id].values = $event"
           />
           <Scale
-              v-if="question.question_type === 3"
-              :min="question.min_value"
-              :max="question.max_value"
-              :minLabel="question.min_label"
-              :maxLabel="question.max_label"
-              :isRequired="question.required"
-              v-model="answers[question.id].value"
-              @input="answers[question.id].value = $event"
+            v-if="question.question_type === 3"
+            :min="question.min_value"
+            :max="question.max_value"
+            :minLabel="question.min_label"
+            :maxLabel="question.max_label"
+            :isRequired="question.required"
+            v-model="answers[question.id].value"
+            @input="answers[question.id].value = $event"
           />
         </div>
-        <button type="submit" v-if="currentPageNumber === pageCount - 1">
-          Отправить
-        </button>
+        <button type="submit" v-if="currentPageNumber === pageCount - 1">Отправить</button>
         <button type="submit" v-else>Дальше</button>
       </form>
     </div>

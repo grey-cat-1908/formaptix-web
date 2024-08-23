@@ -1,6 +1,7 @@
 <template>
   <div class="root" id="root">
     <Header />
+    <Auth />
     <router-view v-slot="{ Component }">
       <div class="layout">
         <transition name="page" mode="out-in">
@@ -13,6 +14,7 @@
 
 <script setup lang="ts">
 import Header from '@/components/Header.vue'
+import Auth from '@/components/Auth.vue'
 </script>
 
 <style scoped>

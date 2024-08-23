@@ -1,10 +1,10 @@
 export function makeAPIRequest(
-    path: string = '',
-    method: string = 'GET',
-    query: any = {},
-    body: any = {},
-    useAuthorization: boolean = false
-): Promise < any > {
+  path: string = '',
+  method: string = 'GET',
+  query: any = {},
+  body: any = {},
+  useAuthorization: boolean = false
+): Promise<any> {
   return new Promise(async (resolve, _) => {
     let options: any = {
       method,
@@ -12,7 +12,7 @@ export function makeAPIRequest(
         'Content-Type': 'application/json'
       }
     }
-    if (useAuthorization) options.headers.Authorization = `${localStorage.getItem('auth_token')}`
+    if (useAuthorization) options.headers['x-token'] = `${localStorage.getItem('auth_token')}`
 
     if (method !== 'GET') {
       options.body = JSON.stringify(body)
@@ -24,17 +24,17 @@ export function makeAPIRequest(
     }
 
     await fetch(finalPath, options)
-        .then(async (r) => {
-          return resolve({
-            json: await r.json(),
-            status: r.status
-          })
+      .then(async (r) => {
+        return resolve({
+          json: await r.json(),
+          status: r.status
         })
-        .catch((err) => {
-          console.error(err)
-          return resolve({
-            error: 'CRITICAL_ERROR'
-          })
+      })
+      .catch((err) => {
+        console.error(err)
+        return resolve({
+          error: 'CRITICAL_ERROR'
         })
+      })
   })
 }
