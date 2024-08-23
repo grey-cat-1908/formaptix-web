@@ -1,3 +1,6 @@
+@import '@/styles/colors.css';
+@import '@/styles/fonts.css';
+
 *,
 ::after,
 ::before {
@@ -91,16 +94,16 @@ body {
   position: relative;
   background: var(--color-main-background);
   color: var(--color-text);
-  font-family: 'Onest', sans-serif;
+  font-family: var(--main-font-family);
   font-weight: var(--main-font-weight);
   font-size: var(--main-font-size);
   min-height: 100vh;
   margin: 0;
   padding: 0;
-
 }
 
-a, button {
+a,
+button {
   background: 0;
   color: var(--color-text);
   font-family: var(--main-font-family);
@@ -111,4 +114,15 @@ a, button {
   outline: 0;
   text-decoration: none;
   border: 0;
+  cursor: pointer;
+}
+
+.default-button {
+  border: 1px solid var(--color-main-border);
+  background: var(--color-secondary-background);
+  transition: 0.25s ease;
+}
+
+.default-button:hover {
+  border: 1px solid var(--color-secondary-border);
 }

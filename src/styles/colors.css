@@ -1,8 +1,15 @@
 :root {
-    --color-main: #5ba8ff;
-    --color-text: #181f23;
-    --color-subtext: #2a363e;
-    --color-main-background:  #fff;
-    --color-secondary-background: #e7e7e8;
+  --color-main: #5c8bfd;
+  --color-text: #181f23;
+  --color-subtext: #646e80;
+  --color-alternative-text: #fff;
+  --color-main-background: #efefef;
+  --color-secondary-background: #fff;
+  --color-input-background: #f8f8f8;
 
+  --color-main-border: #e3e3e3;
+  --color-secondary-border: #d5d5d5;
+
+  --color-red: #ff3b3b;
+  --color-green: rgb(0, 204, 0);
 }

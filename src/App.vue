@@ -1,7 +1,7 @@
 <template>
   <div class="root" id="root">
-    <Header />
     <Auth />
+    <Header />
     <router-view v-slot="{ Component }">
       <div class="layout">
         <transition name="page" mode="out-in">

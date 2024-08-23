@@ -1,29 +1,29 @@
 @font-face {
-    src: url("@/assets/fonts/Onest-Bold.ttf");
-    font-family: "Onest";
-    font-weight: 600;
-    font-style: normal;
-    font-display: swap;
+  src: url('@/assets/fonts/Onest-Bold.ttf');
+  font-family: 'Onest';
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
-    src: url("@/assets/fonts/Onest-Medium.ttf");
-    font-family: "Onest";
-    font-weight: 400;
-    font-style: normal;
-    font-display: swap;
+  src: url('@/assets/fonts/Onest-Medium.ttf');
+  font-family: 'Onest';
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
-    src: url("@/assets/fonts/Onest-Regular.ttf");
-    font-family: "Onest";
-    font-weight: 200;
-    font-style: normal;
-    font-display: swap;
+  src: url('@/assets/fonts/Onest-Regular.ttf');
+  font-family: 'Onest';
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
 }
 
 :root {
-    --main-font-family: 'Onest', sans-serif;
-    --main-font-size: 18px;
-    --main-font-weight: 200;
+  --main-font-family: 'Onest', sans-serif;
+  --main-font-size: 18px;
+  --main-font-weight: 200;
 }
