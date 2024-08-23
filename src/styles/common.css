@@ -79,3 +79,36 @@ body,
     max-width: 1440px;
   }
 }
+
+.container {
+  margin: 0 auto;
+  max-width: 1320px;
+  padding: 10px 30px;
+}
+
+body {
+  width: 100%;
+  position: relative;
+  background: var(--color-main-background);
+  color: var(--color-text);
+  font-family: 'Onest', sans-serif;
+  font-weight: var(--main-font-weight);
+  font-size: var(--main-font-size);
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+
+}
+
+a, button {
+  background: 0;
+  color: var(--color-text);
+  font-family: var(--main-font-family);
+  font-weight: var(--main-font-weight);
+  font-size: var(--main-font-size);
+  margin: 0;
+  padding: 0;
+  outline: 0;
+  text-decoration: none;
+  border: 0;
+}
