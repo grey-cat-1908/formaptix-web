@@ -1,5 +1,5 @@
 <script setup lang="ts"></script>
 
-<template>ddd</template>
+<template></template>
 
 <style scoped></style>

@@ -9,6 +9,11 @@ const router = createRouter({
       component: () => import('@/views/Index.vue')
     },
     {
+      path: '/profile',
+      name: 'Profile',
+      component: () => import('@/views/Profile.vue')
+    },
+    {
       path: '/form/view/:id',
       name: 'View Form',
       component: () => import('@/views/form/View.vue')

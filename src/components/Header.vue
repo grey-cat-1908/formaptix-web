@@ -1,9 +1,13 @@
 <script setup lang="ts">
 import { getTitle } from '@/utils/env'
 import { useAuthStore } from '@/stores/auth'
+
 import { PhList } from '@phosphor-icons/vue'
+import { ref } from 'vue'
 
 const authStore = useAuthStore()
+
+const isToggled = ref(false)
 </script>
 
 <template>
@@ -14,11 +18,11 @@ const authStore = useAuthStore()
           <div class="header-title">
             <h2>{{ getTitle() }}</h2>
           </div>
-          <PhList :size="32" class="header-toggle-btn" />
+          <PhList :size="32" class="header-toggle-btn" @click="isToggled = !isToggled" />
         </div>
-        <div class="header-column header--toggled active">
+        <div class="header-column header--toggled" :class="{ active: isToggled }">
           <div v-if="authStore.isAuthorized" class="header-authed">
-            <button class="header-nickname" type="button">
+            <button class="header-nickname" type="button" @click="$router.push('/profile')">
               {{ authStore.user.username }}
             </button>
             <button class="default-button header-leave-btn" type="button" @click="authStore.logout">

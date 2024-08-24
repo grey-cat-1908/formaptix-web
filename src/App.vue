@@ -2,7 +2,7 @@
   <div class="root" id="root">
     <Auth />
     <Header />
-    <router-view v-slot="{ Component }">
+    <router-view v-slot="{ Component }" :key="$route.fullPath">
       <div class="layout">
         <transition name="page" mode="out-in">
           <component :is="Component" />
