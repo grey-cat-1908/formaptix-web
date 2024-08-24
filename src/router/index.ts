@@ -17,6 +17,11 @@ const router = createRouter({
       path: '/form/view/:id',
       name: 'View Form',
       component: () => import('@/views/form/View.vue')
+    },
+    {
+      path: '/form/answers/:id',
+      name: 'Form Answers',
+      component: () => import('@/views/form/Answers.vue')
     }
   ],
   scrollBehavior(to) {
