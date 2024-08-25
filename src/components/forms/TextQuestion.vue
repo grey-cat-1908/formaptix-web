@@ -148,6 +148,7 @@ function validateInput() {
     display: flex;
     align-items: center;
     gap: 0 13px;
+    font-size: 0.9em;
   }
 
   &-input {

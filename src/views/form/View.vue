@@ -83,15 +83,15 @@ onMounted(async () => {
             <div class="view-form-info">
               <PhInfo :size="23" class="view-form-info--sign" /> Информация о форме
             </div>
-            <h2>{{ data.name }}</h2>
-            <p>{{ currentPage.text }}</p>
+            <h2 class="form-title">{{ data.name }}</h2>
+            <p class="form-description">{{ currentPage.text }}</p>
           </div>
           <form @submit.prevent="submitForm" class="">
             <div class="view-form-q view-form-container">
               <div class="default-card" v-for="question in currentPage.questions">
                 <div class="view-form-q-title">
-                  <h3>{{ question.label }}</h3>
-                  <p>{{ question.description }}</p>
+                  <h3 class="form-q-title">{{ question.label }}</h3>
+                  <p class="form-q-description">{{ question.description }}</p>
                 </div>
                 <TextQuestion
                   v-if="question.question_type === 1"
@@ -127,7 +127,7 @@ onMounted(async () => {
               <div class="view-form-send-space" v-if="currentPageNumber === pageCount - 1">
                 <button type="submit" class="default-button view-form-send">Отправить</button>
                 <div class="view-form-info">
-                  <PhInfo :size="23" class="view-form-info--sign" /> Проверьте все данные перед
+                  <PhInfo :size="22" class="view-form-info--sign" /> Проверьте все данные перед
                   отправкой!
                 </div>
               </div>
@@ -198,7 +198,7 @@ onMounted(async () => {
 
         & h3 {
           font-weight: 400;
-          margin-bottom: 5px;
+          margin-bottom: 8px;
         }
 
         & p {
@@ -242,14 +242,26 @@ onMounted(async () => {
   }
 
   @media (max-width: 500px) {
-    h2 {
+    .form-title {
       font-size: 1.3em;
+    }
+
+    .form-description {
+      font-size: 0.9em;
+    }
+
+    .form-q-title {
+      font-size: 1.1em;
+    }
+
+    .form-q-description {
+      font-size: 0.88em;
     }
   }
 
   @media (max-width: 380px) {
-    h2 {
-      font-size: 1.1em;
+    .form-title {
+      font-size: 1.17em;
     }
   }
 }
