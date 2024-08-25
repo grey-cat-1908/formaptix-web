@@ -7,6 +7,8 @@ import SelectorQuestion from '@/components/forms/SelectorQuestion.vue'
 import FormNotFound from '@/components/FormNotFound.vue'
 import { useRoute } from 'vue-router'
 
+import { PhInfo } from '@phosphor-icons/vue'
+
 const route = useRoute()
 
 const data = ref({})
@@ -71,51 +73,184 @@ onMounted(async () => {
 </script>
 
 <template>
-  <FormNotFound v-if="isFormNotFound" />
-  <div v-else>
-    <div v-if="isSent">Форма была успешно отправлена.</div>
-    <div v-else>
-      <h2>{{ data.name }}</h2>
-      <p>{{ currentPage.text }}</p>
-
-      <form @submit.prevent="submitForm">
-        <div class="" v-for="question in currentPage.questions">
-          <h3>{{ question.label }}</h3>
-          <p>{{ question.description }}</p>
-          <TextQuestion
-            v-if="question.question_type === 1"
-            :minLength="question.min_length"
-            :maxLength="question.max_length"
-            :validator="question.validator"
-            :isRequired="question.required"
-            v-model="answers[question.id].value"
-            @input="answers[question.id].value = $event"
-          />
-          <SelectorQuestion
-            v-if="question.question_type === 2"
-            :minValues="question.min_values"
-            :maxValues="question.max_values"
-            :options="question.options"
-            :isRequired="question.required"
-            v-model="answers[question.id].values"
-            @input="answers[question.id].values = $event"
-          />
-          <Scale
-            v-if="question.question_type === 3"
-            :min="question.min_value"
-            :max="question.max_value"
-            :minLabel="question.min_label"
-            :maxLabel="question.max_label"
-            :isRequired="question.required"
-            v-model="answers[question.id].value"
-            @input="answers[question.id].value = $event"
-          />
+  <div class="view">
+    <div class="container">
+      <FormNotFound v-if="isFormNotFound" />
+      <div v-else>
+        <div v-if="isSent" class="default-card">Форма была успешно отправлена.</div>
+        <div v-else class="view-form">
+          <div class="view-form-title view-form-container default-card">
+            <div class="view-form-info">
+              <PhInfo :size="23" class="view-form-info--sign" /> Информация о форме
+            </div>
+            <h2>{{ data.name }}</h2>
+            <p>{{ currentPage.text }}</p>
+          </div>
+          <form @submit.prevent="submitForm" class="">
+            <div class="view-form-q view-form-container">
+              <div class="default-card" v-for="question in currentPage.questions">
+                <div class="view-form-q-title">
+                  <h3>{{ question.label }}</h3>
+                  <p>{{ question.description }}</p>
+                </div>
+                <TextQuestion
+                  v-if="question.question_type === 1"
+                  :minLength="question.min_length"
+                  :maxLength="question.max_length"
+                  :validator="question.validator"
+                  :isRequired="question.required"
+                  v-model="answers[question.id].value"
+                  @input="answers[question.id].value = $event"
+                />
+                <SelectorQuestion
+                  v-if="question.question_type === 2"
+                  :minValues="question.min_values"
+                  :maxValues="question.max_values"
+                  :options="question.options"
+                  :isRequired="question.required"
+                  v-model="answers[question.id].values"
+                  @input="answers[question.id].values = $event"
+                />
+                <Scale
+                  v-if="question.question_type === 3"
+                  :min="question.min_value"
+                  :max="question.max_value"
+                  :minLabel="question.min_label"
+                  :maxLabel="question.max_label"
+                  :isRequired="question.required"
+                  v-model="answers[question.id].value"
+                  @input="answers[question.id].value = $event"
+                />
+              </div>
+            </div>
+            <div class="view-form-btns view-form-container">
+              <div class="view-form-send-space" v-if="currentPageNumber === pageCount - 1">
+                <button type="submit" class="default-button view-form-send">Отправить</button>
+                <div class="view-form-info">
+                  <PhInfo :size="23" class="view-form-info--sign" /> Проверьте все данные перед
+                  отправкой!
+                </div>
+              </div>
+              <button type="submit" class="default-button view-form-next" v-else>Дальше</button>
+            </div>
+          </form>
         </div>
-        <button type="submit" v-if="currentPageNumber === pageCount - 1">Отправить</button>
-        <button type="submit" v-else>Дальше</button>
-      </form>
+      </div>
     </div>
   </div>
 </template>
 
-<style scoped></style>
+<style scoped lang="scss">
+.default-card {
+  width: 100%;
+  border: 1px solid var(--color-main-border);
+  background: var(--color-secondary-background);
+  padding: 25px;
+  border-radius: 1rem;
+}
+.view {
+  margin: 40px 0;
+  &-form {
+    display: flex;
+    flex-direction: column;
+    //gap: 25px 0;
+
+    &-container {
+      margin: 0 auto;
+      max-width: 800px;
+    }
+
+    &-title {
+      border: 1px solid var(--color-third-border);
+      //margin-bottom: 20px;
+
+      & h2 {
+        margin-top: 10px;
+        margin-bottom: 4px;
+      }
+    }
+
+    &-info {
+      display: flex;
+      align-items: center;
+      gap: 0 11px;
+      color: var(--color-subtext);
+      font-size: 16px;
+
+      &--sign {
+        min-width: 23px;
+        min-height: 23px;
+      }
+    }
+
+    &-q {
+      display: flex;
+      flex-direction: column;
+      gap: 20px 0;
+      margin: 35px auto;
+
+      &:empty {
+        margin: 10px 0;
+      }
+
+      &-title {
+        margin-bottom: 25px;
+
+        & h3 {
+          font-weight: 400;
+          margin-bottom: 5px;
+        }
+
+        & p {
+          color: var(--color-description);
+          font-size: 17px;
+        }
+      }
+    }
+
+    &-send,
+    &-next {
+      border-radius: 1rem;
+      padding: 10px 30px;
+    }
+
+    &-send {
+      padding: 15px 30px;
+      border-radius: 1rem;
+      background: var(--color-main);
+      color: var(--color-alternative-text);
+
+      &:hover {
+        opacity: 0.9;
+      }
+
+      @media (max-width: 500px) {
+        width: 100%;
+      }
+
+      &-space {
+        display: flex;
+        //justify-content: space-between;
+        align-items: center;
+        gap: 10px 30px;
+
+        @media (max-width: 500px) {
+          flex-direction: column;
+        }
+      }
+    }
+  }
+
+  @media (max-width: 500px) {
+    h2 {
+      font-size: 1.3em;
+    }
+  }
+
+  @media (max-width: 380px) {
+    h2 {
+      font-size: 1.1em;
+    }
+  }
+}
+</style>

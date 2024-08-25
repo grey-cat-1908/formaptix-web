@@ -1,10 +1,6 @@
 <template>
   <div class="text-question-component">
-    <input
-      type="text"
-      :value="modelValue"
-      readonly
-    />
+    <input type="text" :value="modelValue" readonly />
   </div>
 </template>
 

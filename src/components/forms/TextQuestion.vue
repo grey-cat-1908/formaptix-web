@@ -1,19 +1,22 @@
 <template>
-  <div class="text-question-component">
+  <div class="text-question">
     <input
+      class="text-question-input"
       type="text"
       v-model="inputValue"
       :maxlength="maxLength"
       :required="isRequired"
       @input="validateInput"
       @blur="validateInput"
+      placeholder="Ваш ответ"
     />
-    <div v-if="error" class="error">{{ error }}</div>
+    <p v-if="error" class="text-question-error"><PhXCircle :size="23" />{{ error }}</p>
   </div>
 </template>
 
 <script setup>
 import { ref } from 'vue'
+import { PhXCircle } from '@phosphor-icons/vue'
 
 const props = defineProps({
   minLength: {
@@ -134,15 +137,37 @@ function validateInput() {
 }
 </script>
 
-<style scoped>
-.text-question-component {
+<style scoped lang="scss">
+.text-question {
   display: flex;
   flex-direction: column;
-  margin-bottom: 20px;
-}
 
-.error {
-  color: red;
-  margin-top: 5px;
+  &-error {
+    margin-top: 20px;
+    color: var(--color-red);
+    display: flex;
+    align-items: center;
+    gap: 0 13px;
+  }
+
+  &-input {
+    width: 100%;
+    background: var(--color-main-background);
+    border: 1px solid var(--color-main-border);
+    padding: 10px 20px;
+    font-weight: 200;
+    border-radius: 0.5rem;
+    outline: 0;
+    transition: 0.25s ease;
+
+    &:hover {
+      border: 1px solid var(--color-secondary-border);
+    }
+
+    &:focus {
+      border: 1px solid var(--color-third-border);
+      background: var(--color-input-background);
+    }
+  }
 }
 </style>

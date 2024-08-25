@@ -1,7 +1,8 @@
 :root {
   --color-main: #5c8bfd;
   --color-text: #181f23;
-  --color-subtext: #646e80;
+  --color-subtext: #727c8e;
+  --color-description: #606b80;
   --color-alternative-text: #fff;
   --color-main-background: #efefef;
   --color-secondary-background: #fff;

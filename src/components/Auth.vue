@@ -111,7 +111,7 @@ async function submitForm() {
       margin-bottom: 30px;
 
       &--btn {
-        color: var(--color-red);
+        //color: var(--color-red);
         transition: 0.25s ease;
 
         &:hover {
