@@ -88,7 +88,7 @@ onMounted(async () => {
           </div>
           <form @submit.prevent="submitForm" class="">
             <div class="view-form-q view-form-container">
-              <div class="default-card" v-for="question in currentPage.questions">
+              <div class="default-card form-red" v-for="question in currentPage.questions">
                 <div class="view-form-q-title">
                   <h3 class="form-q-title">{{ question.label }}</h3>
                   <p class="form-q-description">{{ question.description }}</p>
@@ -148,6 +148,10 @@ onMounted(async () => {
   padding: 25px;
   border-radius: 1rem;
 }
+.form-red {
+  border: 1px solid var(--color-red);
+}
+
 .view {
   margin: 40px 0;
   &-form {
