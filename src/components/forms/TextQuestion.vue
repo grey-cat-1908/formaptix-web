@@ -10,7 +10,9 @@
       @blur="validateInput"
       placeholder="Ваш ответ"
     />
-    <p v-if="error" class="text-question-error"><PhXCircle :size="23" />{{ error }}</p>
+    <p v-if="error" class="text-question-error">
+      <PhXCircle class="text-question-error--sign" :size="23" />{{ error }}
+    </p>
   </div>
 </template>
 
@@ -149,6 +151,11 @@ function validateInput() {
     align-items: center;
     gap: 0 13px;
     font-size: 0.9em;
+
+    &--sign {
+      min-width: 23px;
+      min-height: 23px;
+    }
   }
 
   &-input {

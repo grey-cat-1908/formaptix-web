@@ -1,22 +1,25 @@
 <template>
-  <div class="selector-component">
-    <div class="options">
+  <div class="selector">
+    <div class="selector-options">
       <div
         v-for="(option, index) in options"
         :key="index"
-        class="option"
+        class="selector-option default-button"
         @click="toggleSelection(index)"
         :class="{ selected: isSelected(index) }"
       >
         <span>{{ option.label }}</span>
       </div>
     </div>
-    <div v-if="error" class="error">{{ error }}</div>
+    <p v-if="error" class="selector-error">
+      <PhXCircle class="selector-error--sign" :size="23" />{{ error }}
+    </p>
   </div>
 </template>
 
 <script setup>
 import { ref, watch } from 'vue'
+import { PhXCircle } from '@phosphor-icons/vue'
 
 const props = defineProps({
   minValues: {
@@ -83,25 +86,51 @@ function validateSelection() {
 watch(selectedIndexes, validateSelection)
 </script>
 
-<style scoped>
-.selector-component {
+<style scoped lang="scss">
+.selector {
   display: flex;
   flex-direction: column;
-  margin-bottom: 20px;
-}
 
-.options {
-  display: flex;
-  flex-wrap: wrap;
-}
+  &-options {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+  }
 
-.option {
-  margin: 5px;
-  padding: 10px;
-  border: 1px solid #ccc;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
+  &-option {
+    border-radius: 0.5rem;
+    background: var(--color-input-background);
+    border: 1px solid var(--color-main-border);
+    padding: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+
+    &:hover {
+      border: 1px solid var(--color-secondary-border);
+      background: var(--color-main-background);
+    }
+
+    &.selected {
+      border: 1px solid var(--color-main);
+      background: var(--color-main-toned);
+      //color: var(--color-alternative-text);
+    }
+  }
+
+  &-error {
+    margin-top: 20px;
+    color: var(--color-red);
+    display: flex;
+    align-items: center;
+    gap: 0 13px;
+    font-size: 0.9em;
+
+    &--sign {
+      min-width: 23px;
+      min-height: 23px;
+    }
+  }
 }
 
 .option.selected {

@@ -81,11 +81,8 @@ onMounted(async () => {
         <div v-else class="view-form">
           <div class="view-form-title view-form-container default-card">
             <div class="view-form-info">
-
               <PhCardsThree :size="23" class="view-form-info--sign" />
-              <div class="view-form-info--text">
-                Страница 1 из 1
-              </div>
+              <div class="view-form-info--text">Страница 1 из 1</div>
             </div>
             <h2 class="form-title">{{ data.name }}</h2>
             <p class="form-description">{{ currentPage.text }}</p>

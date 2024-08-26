@@ -1,6 +1,6 @@
 <template>
-  <div class="rating-component">
-    <div class="labels">
+  <div class="rating">
+    <div class="rating-labels">
       <span>{{ minLabel }}</span>
       <span>{{ maxLabel }}</span>
     </div>
@@ -16,7 +16,13 @@
         <span>{{ n }}</span>
       </label>
     </div>
-    <button v-if="selectedValue !== null" @click="cancelSelection">Отменить выбор</button>
+    <button
+      class="rating-delete default-button"
+      v-if="selectedValue !== null"
+      @click="cancelSelection"
+    >
+      Отменить выбор
+    </button>
   </div>
 </template>
 
@@ -67,33 +73,57 @@ function cancelSelection() {
 }
 </script>
 
-<style scoped>
-.rating-component {
+<style scoped lang="scss">
+.rating {
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  &-labels {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  &-options {
+    display: flex;
+    justify-content: space-evenly;
+    gap: 0 50px;
+    width: 100%;
+
+    @media (max-width: 730px) {
+      flex-direction: column;
+      gap: 15px 0;
+    }
+  }
+
+  &-option {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px 0;
+
+    @media (max-width: 730px) {
+      flex-direction: initial;
+      gap: 0 15px;
+    }
+  }
+
+  &-delete {
+    width: 100%;
+    border-radius: 1rem;
+    padding: 10px 30px;
+    margin-top: 25px;
+    border: 1px solid var(--color-third-border);
+
+    &:hover {
+      border: 1px solid var(--color-main);
+    }
+  }
 }
 
-.labels {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  margin-bottom: 10px;
-}
-
-.rating-options {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-}
-
-.rating-option {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-button {
-  margin-top: 10px;
-}
+//button {
+//  margin-top: 10px;
+//}
 </style>
