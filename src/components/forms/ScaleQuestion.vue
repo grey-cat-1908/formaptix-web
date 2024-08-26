@@ -3,7 +3,9 @@
     <div class="rating-labels">
       <div class="rating-labels-info">
         <PhCaretCircleUpDown :size="23" class="rating-labels-info--sign" />
-        <div class="rating-labels-info--text">Выберите от {{ minLabel }} до {{ maxLabel }} вариантов</div>
+        <div class="rating-labels-info--text">
+          Выберите от {{ minLabel }} до {{ maxLabel }} вариантов
+        </div>
       </div>
     </div>
     <div class="rating-options">
@@ -138,7 +140,6 @@ function cancelSelection() {
       visibility: visible;
       cursor: pointer;
       transition: 0.25s ease;
-
     }
 
     &--btn:after:hover {

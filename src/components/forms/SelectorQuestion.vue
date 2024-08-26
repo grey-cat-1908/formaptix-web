@@ -132,6 +132,4 @@ watch(selectedIndexes, validateSelection)
     }
   }
 }
-
-
 </style>
