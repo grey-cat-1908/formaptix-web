@@ -1,8 +1,10 @@
 <template>
   <div class="rating">
     <div class="rating-labels">
-      <span>{{ minLabel }}</span>
-      <span>{{ maxLabel }}</span>
+      <div class="rating-labels-info">
+        <PhCaretCircleUpDown :size="23" class="rating-labels-info--sign" />
+        <div class="rating-labels-info--text">Выберите от {{ minLabel }} до {{ maxLabel }} вариантов</div>
+      </div>
     </div>
     <div class="rating-options">
       <label v-for="n in range" :key="n" class="rating-option">
@@ -29,6 +31,7 @@
 
 <script setup>
 import { ref, computed } from 'vue'
+import { PhCardsThree, PhCaretCircleUpDown } from '@phosphor-icons/vue'
 
 const props = defineProps({
   min: {
@@ -78,13 +81,23 @@ function cancelSelection() {
 .rating {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  //align-items: center;
 
   &-labels {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    margin-bottom: 10px;
+    &-info {
+      display: flex;
+      align-items: center;
+      gap: 0 11px;
+      color: var(--color-description);
+      font-size: 16px;
+      font-weight: 400;
+      margin-bottom: 30px;
+
+      &--sign {
+        min-width: 23px;
+        min-height: 23px;
+      }
+    }
   }
 
   &-options {
@@ -95,7 +108,7 @@ function cancelSelection() {
 
     @media (max-width: 810px) {
       flex-direction: column;
-      gap: 15px 0;
+      gap: 20px 0;
     }
   }
 
@@ -105,15 +118,50 @@ function cancelSelection() {
     align-items: center;
     gap: 20px 0;
 
-    &--btn {
-      width: 20px;
-      height: 20px;
+    //&--btn {
+    //  width: 20px;
+    //  height: 20px;
+    //  cursor: pointer;
+    //}
+
+    &--btn:after {
+      width: 25px;
+      height: 25px;
+      border-radius: 15px;
+      top: -6px;
+      left: -6px;
+      position: relative;
+      background: var(--color-input-background);
+      border: 2px solid var(--color-main-border);
+      content: '';
+      display: inline-block;
+      visibility: visible;
       cursor: pointer;
+      transition: 0.25s ease;
+
+    }
+
+    &--btn:after:hover {
+      border: 2px solid var(--color-secondary-border);
+      background: var(--color-main-background);
+    }
+    &--btn:checked:after {
+      width: 25px;
+      height: 25px;
+      border-radius: 15px;
+      top: -6px;
+      left: -6px;
+      position: relative;
+      border: 2px solid var(--color-main);
+      background: var(--color-main-toned);
+      content: '';
+      display: inline-block;
+      visibility: visible;
     }
 
     @media (max-width: 810px) {
       flex-direction: initial;
-      gap: 0 15px;
+      gap: 0 25px;
     }
   }
 

@@ -133,18 +133,5 @@ watch(selectedIndexes, validateSelection)
   }
 }
 
-.option.selected {
-  border-color: #42b983;
-  background-color: #e6f7ff;
-}
 
-.option img {
-  max-width: 50px;
-  margin-right: 10px;
-}
-
-.error {
-  color: red;
-  margin-top: 5px;
-}
 </style>
