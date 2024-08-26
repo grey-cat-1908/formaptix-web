@@ -7,7 +7,7 @@ import SelectorQuestion from '@/components/forms/SelectorQuestion.vue'
 import FormNotFound from '@/components/FormNotFound.vue'
 import { useRoute } from 'vue-router'
 
-import { PhInfo } from '@phosphor-icons/vue'
+import { PhInfo, PhCardsThree } from '@phosphor-icons/vue'
 
 const route = useRoute()
 
@@ -81,14 +81,18 @@ onMounted(async () => {
         <div v-else class="view-form">
           <div class="view-form-title view-form-container default-card">
             <div class="view-form-info">
-              <PhInfo :size="23" class="view-form-info--sign" /> Информация о форме
+
+              <PhCardsThree :size="23" class="view-form-info--sign" />
+              <div class="view-form-info--text">
+                Страница 1 из 1
+              </div>
             </div>
             <h2 class="form-title">{{ data.name }}</h2>
             <p class="form-description">{{ currentPage.text }}</p>
           </div>
           <form @submit.prevent="submitForm" class="">
             <div class="view-form-q view-form-container">
-              <div class="default-card form-red" v-for="question in currentPage.questions">
+              <div class="default-card" v-for="question in currentPage.questions">
                 <div class="view-form-q-title">
                   <h3 class="form-q-title">{{ question.label }}</h3>
                   <p class="form-q-description">{{ question.description }}</p>
