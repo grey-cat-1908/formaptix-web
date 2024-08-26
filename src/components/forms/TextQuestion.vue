@@ -159,14 +159,14 @@ function validateInput() {
   }
 
   &-input {
-    width: 100%;
+    width: 100% !important;
     background: var(--color-main-background);
     border: 1px solid var(--color-main-border);
     padding: 10px 20px;
     font-weight: 200;
     border-radius: 0.5rem;
     outline: 0;
-    transition: 0.25s ease;
+    transition: border, background 0.25s ease;
 
     &:hover {
       border: 1px solid var(--color-secondary-border);
