@@ -12,6 +12,7 @@
           v-model="selectedValue"
           :required="isRequired"
           @change="updateValue"
+          class="rating-option--btn"
         />
         <span>{{ n }}</span>
       </label>
@@ -92,7 +93,7 @@ function cancelSelection() {
     gap: 0 50px;
     width: 100%;
 
-    @media (max-width: 730px) {
+    @media (max-width: 810px) {
       flex-direction: column;
       gap: 15px 0;
     }
@@ -102,9 +103,15 @@ function cancelSelection() {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 10px 0;
+    gap: 20px 0;
 
-    @media (max-width: 730px) {
+    &--btn {
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+    }
+
+    @media (max-width: 810px) {
       flex-direction: initial;
       gap: 0 15px;
     }
