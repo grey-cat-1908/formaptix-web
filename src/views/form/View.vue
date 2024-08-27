@@ -9,7 +9,6 @@ import { useRoute } from 'vue-router'
 
 import { PhInfo, PhCardsThree } from '@phosphor-icons/vue'
 import { validateSNILS, validateTIN } from '@/utils/validators'
-import { useFormViewStore } from '@/stores/formView'
 
 const route = useRoute()
 
@@ -20,8 +19,6 @@ const currentPage = ref({})
 const answers = ref([])
 const isFormNotFound = ref(true)
 const isSent = ref(false)
-
-const formViewStore = useFormViewStore;
 
 async function prepareNewPage() {
   currentPage.value = data.value.pages[currentPageNumber.value]
@@ -100,7 +97,7 @@ onMounted(async () => {
         <div v-else class="view-form">
           <div class="view-form-title view-form-container default-card">
             <div class="view-form-info">
-              <PhCardsThree :size="23" class="view-form-info--sign" :class="{ 'form-red': formViewStore.error }" />
+              <PhCardsThree :size="23" class="view-form-info--sign" />
               <div class="view-form-info--text">Страница {{ currentPageNumber + 1 }} из {{ data.pages.length }}</div>
             </div>
             <h2 class="form-title">{{ data.name }}</h2>
