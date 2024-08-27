@@ -8,6 +8,8 @@ import FormNotFound from '@/components/FormNotFound.vue'
 import { useRoute } from 'vue-router'
 
 import { PhInfo, PhCardsThree } from '@phosphor-icons/vue'
+import { validateSNILS, validateTIN } from '@/utils/validators'
+import { useFormViewStore } from '@/stores/formView'
 
 const route = useRoute()
 
@@ -18,6 +20,8 @@ const currentPage = ref({})
 const answers = ref([])
 const isFormNotFound = ref(true)
 const isSent = ref(false)
+
+const formViewStore = useFormViewStore;
 
 async function prepareNewPage() {
   currentPage.value = data.value.pages[currentPageNumber.value]
@@ -34,7 +38,14 @@ function beforeSubmitValidate() {
     const question = currentPage.value.questions[question_id]
     const answer = answers.value[question.id]
 
-    if (question.question_type === 2) {
+    if (!answer) return false;
+    if (question.required && !(answer.value || answer.values)) return false;
+
+    if (question.question_type === 1 && answer.value) {
+      if (!question.validator && question.min_length && answer.value.length < question.min_length) return false;
+      if (question.validator === 1 && !validateTIN(answer.value)) return false;
+      if (question.validator === 2 && !validateSNILS(answer.value)) return false;
+    } else if (question.question_type === 2) {
       return question.required && answer.values.length >= question.min_values
     }
   }
@@ -47,6 +58,14 @@ async function submitForm() {
       currentPageNumber.value += 1
       await prepareNewPage()
     } else {
+      for (let page of data.value.pages) {
+        page.questions.forEach((q) => {
+          let answer = answers.value[q.id];
+          if (!q.required && !(answer.value || answer.values)) {
+            delete answers.value[q.id];
+          }
+        })
+      }
       await makeAPIRequest(
         '/answer/create',
         'POST',
@@ -81,8 +100,8 @@ onMounted(async () => {
         <div v-else class="view-form">
           <div class="view-form-title view-form-container default-card">
             <div class="view-form-info">
-              <PhCardsThree :size="23" class="view-form-info--sign" />
-              <div class="view-form-info--text">Страница 1 из 1</div>
+              <PhCardsThree :size="23" class="view-form-info--sign" :class="{ 'form-red': formViewStore.error }" />
+              <div class="view-form-info--text">Страница {{ currentPageNumber + 1 }} из {{ data.pages.length }}</div>
             </div>
             <h2 class="form-title">{{ data.name }}</h2>
             <p class="form-description">{{ currentPage.text }}</p>
@@ -94,6 +113,7 @@ onMounted(async () => {
                   <h3 class="form-q-title">{{ question.label }}</h3>
                   <p class="form-q-description">{{ question.description }}</p>
                 </div>
+                <img v-if="question.image_url" :src="question.image_url" alt="image by user" />
                 <TextQuestion
                   v-if="question.question_type === 1"
                   :minLength="question.min_length"

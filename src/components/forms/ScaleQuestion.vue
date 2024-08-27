@@ -1,13 +1,5 @@
 <template>
   <div class="rating">
-    <div class="rating-labels">
-      <div class="rating-labels-info">
-        <PhCaretCircleUpDown :size="23" class="rating-labels-info--sign" />
-        <div class="rating-labels-info--text">
-          Выберите от {{ minLabel }} до {{ maxLabel }} вариантов
-        </div>
-      </div>
-    </div>
     <div class="rating-options">
       <label v-for="n in range" :key="n" class="rating-option">
         <input
@@ -84,23 +76,6 @@ function cancelSelection() {
   display: flex;
   flex-direction: column;
   //align-items: center;
-
-  &-labels {
-    &-info {
-      display: flex;
-      align-items: center;
-      gap: 0 11px;
-      color: var(--color-description);
-      font-size: 16px;
-      font-weight: 400;
-      margin-bottom: 30px;
-
-      &--sign {
-        min-width: 23px;
-        min-height: 23px;
-      }
-    }
-  }
 
   &-options {
     display: flex;

@@ -1,5 +1,13 @@
 <template>
   <div class="selector">
+    <div class="selector-labels">
+      <div class="selector-labels-info">
+        <PhCaretCircleUpDown :size="23" class="selector-labels-info--sign" />
+        <div class="selector-labels-info--text">
+          Выберите от {{ minValues }} до {{ Math.min(maxValues, options.length) }} {{ normalizeCountForm(Math.min(maxValues, options.length), ['варианта', 'вариантов', 'вариантов']) }}
+        </div>
+      </div>
+    </div>
     <div class="selector-options">
       <div
         v-for="(option, index) in options"
@@ -19,7 +27,8 @@
 
 <script setup>
 import { ref, watch } from 'vue'
-import { PhXCircle } from '@phosphor-icons/vue'
+import { PhCaretCircleUpDown, PhXCircle } from '@phosphor-icons/vue'
+import { normalizeCountForm } from '@/utils/formation'
 
 const props = defineProps({
   minValues: {
@@ -69,12 +78,12 @@ function validateSelection() {
   error.value = ''
 
   if (selectedIndexes.value.length < props.minValues) {
-    error.value = `Необходимо выбрать минимум ${props.minValues} вариантов.`
+    error.value = `Необходимо выбрать минимум ${props.minValues} ${normalizeCountForm(props.minValues, ['вариант', 'варианта', 'вариантов']) }.`
     return
   }
 
   if (props.maxValues && selectedIndexes.value.length > props.maxValues) {
-    error.value = `Необходимо выбрать не больше ${props.maxValues} вариантов.`
+    error.value = `Необходимо выбрать не больше ${props.maxValues} ${normalizeCountForm(props.maxValues, ['варианта', 'вариантов', 'вариантов']) }.`
     return
   }
 
@@ -90,6 +99,23 @@ watch(selectedIndexes, validateSelection)
 .selector {
   display: flex;
   flex-direction: column;
+
+  &-labels {
+    &-info {
+      display: flex;
+      align-items: center;
+      gap: 0 11px;
+      color: var(--color-description);
+      font-size: 16px;
+      font-weight: 400;
+      margin-bottom: 30px;
+
+      &--sign {
+        min-width: 23px;
+        min-height: 23px;
+      }
+    }
+  }
 
   &-options {
     display: flex;
