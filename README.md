@@ -24,7 +24,7 @@ You can configure nearly everything by setting up the following Enviroment Varia
 
 |  Variable  | Description | Value |
 |---|---|---|
-| `VITE_APP_NAME`  | You can specify an app name to be displayed in the header and other parts of the website.  | `Formaptixx` (default) |
+| `VITE_APP_NAME`  | You can specify an app name to be displayed in the header and other parts of the website.  | `Formaptix` (default) |
 | `VITE_API_URL`  |  You MUST specify Formaptix server url | **required** |
 
 To specify all the enviroment variables you can create `.env` file. You can find `.env` file example [here](https://github.com/grey-cat-1908/formaptix-web/blob/master/.env.example).
