@@ -4,10 +4,13 @@ import { makeAPIRequest } from '@/utils/http'
 import FormNotFound from '@/components/FormNotFound.vue'
 import { useRoute } from 'vue-router'
 import TextValue from '@/components/answers/TextValue.vue'
+import SelectorValue from '@/components/answers/SelectorValue.vue'
+import ScaleValue from '@/components/answers/ScaleValue.vue'
 
 const route = useRoute()
 
 const data = ref([])
+const questionsData = ref({})
 const currentPageNumber = ref(0)
 const isAnswerNotFound = ref(true)
 const mode = ref(0)
@@ -27,6 +30,19 @@ onMounted(async () => {
   if (data.value.length > 0) {
     isAnswerNotFound.value = false
   }
+
+  const questionsFormResponse = await makeAPIRequest('/form/get', 'GET', {
+    id: Number(route.params.id)
+  })
+  if (!questionsFormResponse.json || questionsFormResponse.status !== 200) {
+    return
+  }
+
+  questionsFormResponse.json.data.pages.forEach((p: any) => {
+    p.questions.forEach((q: any) => {
+      questionsData.value[q.id] = q
+    })
+  })
 })
 </script>
 
@@ -41,7 +57,27 @@ onMounted(async () => {
       </button>
 
       <div class="" v-for="(value, index) in data[currentPageNumber].data.values">
-        <TextValue v-if="value.question_type === 1" v-model="value.value" />
+        <TextValue
+          v-if="questionsData[value.question_id].question_type === 1"
+          :label="questionsData[value.question_id].label"
+          :description="questionsData[value.question_id].description"
+          v-model="value.value"
+        />
+        <SelectorValue
+          v-if="questionsData[value.question_id].question_type === 2"
+          :options="questionsData[value.question_id].options"
+          :label="questionsData[value.question_id].label"
+          :description="questionsData[value.question_id].description"
+          v-model="value.values"
+        ></SelectorValue>
+        <ScaleValue
+          v-if="questionsData[value.question_id].question_type === 3"
+          :min="questionsData[value.question_id].min_value"
+          :max="questionsData[value.question_id].max_value"
+          :label="questionsData[value.question_id].label"
+          :description="questionsData[value.question_id].description"
+          v-model="value.value"
+        ></ScaleValue>
       </div>
     </div>
   </div>

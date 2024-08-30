@@ -29,7 +29,7 @@ import { PhXCircle } from '@phosphor-icons/vue'
 import { validateSNILS, validateTIN } from '@/utils/validators'
 import { normalizeCountForm } from '@/utils/formation'
 
-import '@/styles/form/view.scss';
+import '@/styles/form/view.scss'
 
 const props = defineProps({
   label: {
@@ -72,10 +72,10 @@ const error = ref('')
 
 function validateInput() {
   error.value = ''
-  
+
   if (props.isRequired || inputValue.value) {
     if (props.minLength && inputValue.value.length < props.minLength) {
-      error.value = `Минимальная длина - ${props.minLength} ${normalizeCountForm(props.minValues, ['символ', 'символа', 'символов']) }`
+      error.value = `Минимальная длина - ${props.minLength} ${normalizeCountForm(props.minValues, ['символ', 'символа', 'символов'])}`
     }
     if (props.validator === 1 && !validateTIN(inputValue.value)) {
       error.value = 'Некорректный ИНН'
@@ -116,7 +116,9 @@ function validateInput() {
     font-weight: 200;
     border-radius: 0.5rem;
     outline: 0;
-    transition: border, background 0.25s ease;
+    transition:
+      border,
+      background 0.25s ease;
 
     &:hover {
       border: 1px solid var(--color-secondary-border);

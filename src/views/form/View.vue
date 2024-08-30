@@ -10,7 +10,7 @@ import { useRoute } from 'vue-router'
 import { PhInfo, PhCardsThree } from '@phosphor-icons/vue'
 import { validateSNILS, validateTIN } from '@/utils/validators'
 
-import '@/styles/form/view.scss';
+import '@/styles/form/view.scss'
 
 const route = useRoute()
 
@@ -36,14 +36,18 @@ function beforeSubmitValidate() {
   for (let question of currentPage.value.questions) {
     const answer = answers.value[question.id]
 
-    if (!answer) return false;
-    if (question.required && !answer.value && !answer.values) return false;
+    if (!answer) return false
+    if (question.required && !answer.value && !answer.values) return false
 
     if (question.question_type === 1 && answer.value) {
-      if (!question.validator && question.min_length && answer.value.length < question.min_length) return false;
-      if (question.validator === 1 && !validateTIN(answer.value)) return false;
-      if (question.validator === 2 && !validateSNILS(answer.value)) return false;
-    } else if (question.question_type === 2 && !(question.required && answer.values.length >= question.min_values)) {
+      if (!question.validator && question.min_length && answer.value.length < question.min_length)
+        return false
+      if (question.validator === 1 && !validateTIN(answer.value)) return false
+      if (question.validator === 2 && !validateSNILS(answer.value)) return false
+    } else if (
+      question.question_type === 2 &&
+      !(question.required && answer.values.length >= question.min_values)
+    ) {
       return false
     }
   }
@@ -58,9 +62,9 @@ async function submitForm() {
     } else {
       for (let page of data.value.pages) {
         page.questions.forEach((q) => {
-          let answer = answers.value[q.id];
+          let answer = answers.value[q.id]
           if (!q.required && !(answer.value || answer.values)) {
-            delete answers.value[q.id];
+            delete answers.value[q.id]
           }
         })
       }
@@ -99,7 +103,9 @@ onMounted(async () => {
           <div class="view-form-title view-form-container default-card">
             <div class="view-form-info">
               <PhCardsThree :size="23" class="view-form-info--sign" />
-              <div class="view-form-info--text">Страница {{ currentPageNumber + 1 }} из {{ data.pages.length }}</div>
+              <div class="view-form-info--text">
+                Страница {{ currentPageNumber + 1 }} из {{ data.pages.length }}
+              </div>
             </div>
             <h2 class="form-title">{{ data.name }}</h2>
             <p class="form-description">{{ currentPage.text }}</p>

@@ -1,40 +1,23 @@
 <template>
-  <div class="default-card">
+  <div class="default-card" v-if="modelValue">
     <div class="view-form-q-title">
       <h3 class="form-q-title">{{ label }}</h3>
       <p class="form-q-description">{{ description }}</p>
     </div>
-    <img v-if="imageUrl" :src="imageUrl" alt="image by user" />
     <div class="rating">
       <div class="rating-options">
         <label v-for="n in range" :key="n" class="rating-option">
-          <input
-            type="radio"
-            :value="n"
-            v-model="selectedValue"
-            :required="isRequired"
-            @change="updateValue"
-            class="rating-option--btn"
-          />
+          <input type="radio" :value="n" v-model="selectedValue" class="rating-option--btn" />
           <span>{{ n }}</span>
         </label>
       </div>
-      <button
-        class="rating-delete default-button"
-        v-if="selectedValue !== null"
-        @click="cancelSelection"
-      >
-        Отменить выбор
-      </button>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
-import { PhCardsThree, PhCaretCircleUpDown } from '@phosphor-icons/vue'
-
 import '@/styles/form/view.scss'
+import { computed, ref } from 'vue'
 
 const props = defineProps({
   label: {
@@ -42,10 +25,6 @@ const props = defineProps({
     default: ''
   },
   description: {
-    type: String,
-    default: null
-  },
-  imageUrl: {
     type: String,
     default: null
   },
@@ -57,39 +36,16 @@ const props = defineProps({
     type: Number,
     required: true
   },
-  minLabel: {
-    type: String,
-    required: true
-  },
-  maxLabel: {
-    type: String,
-    required: true
-  },
-  value: {
-    type: Number,
-    default: null
-  },
-  isRequired: {
-    type: Boolean,
-    default: true
+  modelValue: {
+    type: Number
   }
 })
 
-const emit = defineEmits(['input'])
-const selectedValue = ref(props.value)
+const selectedValue = ref(props.modelValue)
 
 const range = computed(() => {
   return Array.from({ length: props.max - props.min + 1 }, (_, i) => props.min + i)
 })
-
-function updateValue() {
-  emit('input', selectedValue.value)
-}
-
-function cancelSelection() {
-  selectedValue.value = null
-  emit('input', selectedValue.value)
-}
 </script>
 
 <style scoped lang="scss">
@@ -174,8 +130,4 @@ function cancelSelection() {
     }
   }
 }
-
-//button {
-//  margin-top: 10px;
-//}
 </style>
