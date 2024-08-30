@@ -10,7 +10,7 @@ Simple guide
 
 * You need to install git to clone the project. You can find a simple guide [here](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git).
 * Set up and run the Formaptix Server. You can find a guide in the [Formaptix Server Repository](https://github.com/grey-cat-1908/formaptix-server/).
-* Install Node.js®. You can do that [here](https://nodejs.org/en/download/package-manager).
+* Install Node.js®. You can find instructions [here](https://nodejs.org/en/download/package-manager).
 
 Clone Formaptix frontend using the following command:
 
