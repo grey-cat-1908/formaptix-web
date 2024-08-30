@@ -1,18 +1,25 @@
 <template>
-  <div class="text-question">
-    <input
-      class="text-question-input"
-      type="text"
-      v-model="inputValue"
-      :maxlength="maxLength"
-      :required="isRequired"
-      @input="validateInput"
-      @blur="validateInput"
-      placeholder="Ваш ответ"
-    />
-    <p v-if="error" class="text-question-error">
-      <PhXCircle class="text-question-error--sign" :size="23" />{{ error }}
-    </p>
+  <div class="default-card" :class="{ 'form-red': error }">
+    <div class="view-form-q-title">
+      <h3 class="form-q-title">{{ label }}</h3>
+      <p class="form-q-description">{{ description }}</p>
+    </div>
+    <img v-if="imageUrl" :src="imageUrl" alt="image by user" />
+    <div class="text-question">
+      <input
+        class="text-question-input"
+        type="text"
+        v-model="inputValue"
+        :maxlength="maxLength"
+        :required="isRequired"
+        @input="validateInput"
+        @blur="validateInput"
+        placeholder="Ваш ответ"
+      />
+      <p v-if="error" class="text-question-error">
+        <PhXCircle class="text-question-error--sign" :size="23" />{{ error }}
+      </p>
+    </div>
   </div>
 </template>
 
@@ -22,7 +29,21 @@ import { PhXCircle } from '@phosphor-icons/vue'
 import { validateSNILS, validateTIN } from '@/utils/validators'
 import { normalizeCountForm } from '@/utils/formation'
 
+import '@/styles/form/view.scss';
+
 const props = defineProps({
+  label: {
+    type: String,
+    default: ''
+  },
+  description: {
+    type: String,
+    default: null
+  },
+  imageUrl: {
+    type: String,
+    default: null
+  },
   minLength: {
     type: Number,
     default: null

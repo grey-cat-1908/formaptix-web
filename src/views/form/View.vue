@@ -10,6 +10,8 @@ import { useRoute } from 'vue-router'
 import { PhInfo, PhCardsThree } from '@phosphor-icons/vue'
 import { validateSNILS, validateTIN } from '@/utils/validators'
 
+import '@/styles/form/view.scss';
+
 const route = useRoute()
 
 const data = ref({})
@@ -31,19 +33,18 @@ async function prepareNewPage() {
 }
 
 function beforeSubmitValidate() {
-  for (let question_id of currentPage.value.questions.keys()) {
-    const question = currentPage.value.questions[question_id]
+  for (let question of currentPage.value.questions) {
     const answer = answers.value[question.id]
 
     if (!answer) return false;
-    if (question.required && !(answer.value || answer.values)) return false;
+    if (question.required && !answer.value && !answer.values) return false;
 
     if (question.question_type === 1 && answer.value) {
       if (!question.validator && question.min_length && answer.value.length < question.min_length) return false;
       if (question.validator === 1 && !validateTIN(answer.value)) return false;
       if (question.validator === 2 && !validateSNILS(answer.value)) return false;
-    } else if (question.question_type === 2) {
-      return question.required && answer.values.length >= question.min_values
+    } else if (question.question_type === 2 && !(question.required && answer.values.length >= question.min_values)) {
+      return false
     }
   }
   return true
@@ -105,14 +106,12 @@ onMounted(async () => {
           </div>
           <form @submit.prevent="submitForm" class="">
             <div class="view-form-q view-form-container">
-              <div class="default-card" v-for="question in currentPage.questions">
-                <div class="view-form-q-title">
-                  <h3 class="form-q-title">{{ question.label }}</h3>
-                  <p class="form-q-description">{{ question.description }}</p>
-                </div>
-                <img v-if="question.image_url" :src="question.image_url" alt="image by user" />
+              <div v-for="question in currentPage.questions">
                 <TextQuestion
                   v-if="question.question_type === 1"
+                  :label="question.label"
+                  :description="question.description"
+                  :imageUrl="question.image_url"
                   :minLength="question.min_length"
                   :maxLength="question.max_length"
                   :validator="question.validator"
@@ -122,6 +121,9 @@ onMounted(async () => {
                 />
                 <SelectorQuestion
                   v-if="question.question_type === 2"
+                  :label="question.label"
+                  :description="question.description"
+                  :imageUrl="question.image_url"
                   :minValues="question.min_values"
                   :maxValues="question.max_values"
                   :options="question.options"
@@ -131,6 +133,9 @@ onMounted(async () => {
                 />
                 <Scale
                   v-if="question.question_type === 3"
+                  :label="question.label"
+                  :description="question.description"
+                  :imageUrl="question.image_url"
                   :min="question.min_value"
                   :max="question.max_value"
                   :minLabel="question.min_label"
@@ -158,133 +163,4 @@ onMounted(async () => {
   </div>
 </template>
 
-<style scoped lang="scss">
-.default-card {
-  width: 100%;
-  border: 1px solid var(--color-main-border);
-  background: var(--color-secondary-background);
-  padding: 25px;
-  border-radius: 1rem;
-}
-.form-red {
-  border: 1px solid var(--color-red);
-}
-
-.view {
-  margin: 40px 0;
-  &-form {
-    display: flex;
-    flex-direction: column;
-    //gap: 25px 0;
-
-    &-container {
-      margin: 0 auto;
-      max-width: 800px;
-    }
-
-    &-title {
-      border: 1px solid var(--color-third-border);
-      //margin-bottom: 20px;
-
-      & h2 {
-        margin-top: 10px;
-        margin-bottom: 4px;
-      }
-    }
-
-    &-info {
-      display: flex;
-      align-items: center;
-      gap: 0 11px;
-      color: var(--color-subtext);
-      font-size: 16px;
-
-      &--sign {
-        min-width: 23px;
-        min-height: 23px;
-      }
-    }
-
-    &-q {
-      display: flex;
-      flex-direction: column;
-      gap: 20px 0;
-      margin: 35px auto;
-
-      &:empty {
-        margin: 10px 0;
-      }
-
-      &-title {
-        margin-bottom: 25px;
-
-        & h3 {
-          font-weight: 400;
-          margin-bottom: 8px;
-        }
-
-        & p {
-          color: var(--color-description);
-          font-size: 17px;
-        }
-      }
-    }
-
-    &-send,
-    &-next {
-      border-radius: 1rem;
-      padding: 10px 30px;
-    }
-
-    &-send {
-      padding: 15px 30px;
-      border-radius: 1rem;
-      background: var(--color-main);
-      color: var(--color-alternative-text);
-
-      &:hover {
-        opacity: 0.9;
-      }
-
-      @media (max-width: 500px) {
-        width: 100%;
-      }
-
-      &-space {
-        display: flex;
-        //justify-content: space-between;
-        align-items: center;
-        gap: 10px 30px;
-
-        @media (max-width: 500px) {
-          flex-direction: column;
-        }
-      }
-    }
-  }
-
-  @media (max-width: 500px) {
-    .form-title {
-      font-size: 1.3em;
-    }
-
-    .form-description {
-      font-size: 0.9em;
-    }
-
-    .form-q-title {
-      font-size: 1.1em;
-    }
-
-    .form-q-description {
-      font-size: 0.88em;
-    }
-  }
-
-  @media (max-width: 380px) {
-    .form-title {
-      font-size: 1.17em;
-    }
-  }
-}
-</style>
+<style scoped lang="scss"></style>

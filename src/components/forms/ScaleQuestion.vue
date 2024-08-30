@@ -1,25 +1,32 @@
 <template>
-  <div class="rating">
-    <div class="rating-options">
-      <label v-for="n in range" :key="n" class="rating-option">
-        <input
-          type="radio"
-          :value="n"
-          v-model="selectedValue"
-          :required="isRequired"
-          @change="updateValue"
-          class="rating-option--btn"
-        />
-        <span>{{ n }}</span>
-      </label>
+  <div class="default-card">
+    <div class="view-form-q-title">
+      <h3 class="form-q-title">{{ label }}</h3>
+      <p class="form-q-description">{{ description }}</p>
     </div>
-    <button
-      class="rating-delete default-button"
-      v-if="selectedValue !== null"
-      @click="cancelSelection"
-    >
-      Отменить выбор
-    </button>
+    <img v-if="imageUrl" :src="imageUrl" alt="image by user" />
+    <div class="rating">
+      <div class="rating-options">
+        <label v-for="n in range" :key="n" class="rating-option">
+          <input
+            type="radio"
+            :value="n"
+            v-model="selectedValue"
+            :required="isRequired"
+            @change="updateValue"
+            class="rating-option--btn"
+          />
+          <span>{{ n }}</span>
+        </label>
+      </div>
+      <button
+        class="rating-delete default-button"
+        v-if="selectedValue !== null"
+        @click="cancelSelection"
+      >
+        Отменить выбор
+      </button>
+    </div>
   </div>
 </template>
 
@@ -27,7 +34,21 @@
 import { ref, computed } from 'vue'
 import { PhCardsThree, PhCaretCircleUpDown } from '@phosphor-icons/vue'
 
+import '@/styles/form/view.scss';
+
 const props = defineProps({
+  label: {
+    type: String,
+    default: ''
+  },
+  description: {
+    type: String,
+    default: null
+  },
+  imageUrl: {
+    type: String,
+    default: null
+  },
   min: {
     type: Number,
     required: true

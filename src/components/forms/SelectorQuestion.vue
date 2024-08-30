@@ -1,27 +1,34 @@
 <template>
-  <div class="selector">
-    <div class="selector-labels">
-      <div class="selector-labels-info">
-        <PhCaretCircleUpDown :size="23" class="selector-labels-info--sign" />
-        <div class="selector-labels-info--text">
-          Выберите от {{ minValues }} до {{ Math.min(maxValues, options.length) }} {{ normalizeCountForm(Math.min(maxValues, options.length), ['варианта', 'вариантов', 'вариантов']) }}
+  <div class="default-card" :class="{ 'form-red': error }">
+    <div class="view-form-q-title">
+      <h3 class="form-q-title">{{ label }}</h3>
+      <p class="form-q-description">{{ description }}</p>
+    </div>
+    <img v-if="imageUrl" :src="imageUrl" alt="image by user" />
+    <div class="selector">
+      <div class="selector-labels">
+        <div class="selector-labels-info">
+          <PhCaretCircleUpDown :size="23" class="selector-labels-info--sign" />
+          <div class="selector-labels-info--text">
+            Выберите от {{ minValues }} до {{ Math.min(maxValues, options.length) }} {{ normalizeCountForm(Math.min(maxValues, options.length), ['варианта', 'вариантов', 'вариантов']) }}
+          </div>
         </div>
       </div>
-    </div>
-    <div class="selector-options">
-      <div
-        v-for="(option, index) in options"
-        :key="index"
-        class="selector-option default-button"
-        @click="toggleSelection(index)"
-        :class="{ selected: isSelected(index) }"
-      >
-        <span>{{ option.label }}</span>
+      <div class="selector-options">
+        <div
+          v-for="(option, index) in options"
+          :key="index"
+          class="selector-option default-button"
+          @click="toggleSelection(index)"
+          :class="{ selected: isSelected(index) }"
+        >
+          <span>{{ option.label }}</span>
+        </div>
       </div>
+      <p v-if="error" class="selector-error">
+        <PhXCircle class="selector-error--sign" :size="23" />{{ error }}
+      </p>
     </div>
-    <p v-if="error" class="selector-error">
-      <PhXCircle class="selector-error--sign" :size="23" />{{ error }}
-    </p>
   </div>
 </template>
 
@@ -30,7 +37,21 @@ import { ref, watch } from 'vue'
 import { PhCaretCircleUpDown, PhXCircle } from '@phosphor-icons/vue'
 import { normalizeCountForm } from '@/utils/formation'
 
+import '@/styles/form/view.scss';
+
 const props = defineProps({
+  label: {
+    type: String,
+    default: ''
+  },
+  description: {
+    type: String,
+    default: null
+  },
+  imageUrl: {
+    type: String,
+    default: null
+  },
   minValues: {
     type: Number,
     default: 1
