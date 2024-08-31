@@ -1,15 +1,13 @@
-# Formaptix Frontend
+# Formaptix Web
 
-This repository contains the source code for the Formaptix frontend, as well as a short tutorial on how to run it on the server yourself.
+This repository contains the source code for the Formaptix Web, as well as a short tutorial on how to run it on the server yourself.
 
 ## Guide
-
-Simple guide
 
 ### Preparing
 
 * You need to install git to clone the project. You can find a simple guide [here](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git).
-* Set up and run the Formaptix Server. You can find a guide in the [Formaptix Server Repository](https://github.com/grey-cat-1908/formaptix-server/).
+* Set up and run the Formaptix Server. You can find a guide in the [Formaptix Server repository](https://github.com/grey-cat-1908/formaptix-server/).
 * Install Node.js®. You can find instructions [here](https://nodejs.org/en/download/package-manager).
 
 Clone Formaptix frontend using the following command:
@@ -31,7 +29,7 @@ To specify all the enviroment variables you can create `.env` file. You can find
 
 ### Building
 
-To build project, you should go to the Formaptix frontend directory and run the following commands:
+To build project, you should go to the Formaptix Web directory and run the following commands:
 
 ```sh
 yarn
