@@ -22,6 +22,8 @@ const answers = ref([])
 const isFormNotFound = ref(true)
 const isSent = ref(false)
 
+const emptyQuestions = ref({});
+
 async function prepareNewPage() {
   currentPage.value = data.value.pages[currentPageNumber.value]
   currentPage.value.questions.forEach((q) => {
@@ -35,6 +37,8 @@ async function prepareNewPage() {
 function beforeSubmitValidate() {
   for (let question of currentPage.value.questions) {
     const answer = answers.value[question.id]
+
+    emptyQuestions.value[question.id] = true;
 
     if (!answer) return false
     if (question.required && !answer.value && !answer.values) return false
@@ -50,6 +54,8 @@ function beforeSubmitValidate() {
     ) {
       return false
     }
+
+    delete emptyQuestions.value[question.id]
   }
   return true
 }
@@ -122,6 +128,7 @@ onMounted(async () => {
                   :maxLength="question.max_length"
                   :validator="question.validator"
                   :isRequired="question.required"
+                  :isEmpty="emptyQuestions[question.id]"
                   v-model="answers[question.id].value"
                   @input="answers[question.id].value = $event"
                 />
@@ -134,6 +141,7 @@ onMounted(async () => {
                   :maxValues="question.max_values"
                   :options="question.options"
                   :isRequired="question.required"
+                  :isEmpty="emptyQuestions[question.id]"
                   v-model="answers[question.id].values"
                   @input="answers[question.id].values = $event"
                 />
@@ -147,6 +155,7 @@ onMounted(async () => {
                   :minLabel="question.min_label"
                   :maxLabel="question.max_label"
                   :isRequired="question.required"
+                  :isEmpty="emptyQuestions[question.id]"
                   v-model="answers[question.id].value"
                   @input="answers[question.id].value = $event"
                 />

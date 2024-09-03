@@ -1,5 +1,5 @@
 <template>
-  <div class="default-card" :class="{ 'form-red': error }">
+  <div class="default-card" :class="{ 'form-red': error || isEmpty }">
     <div class="view-form-q-title">
       <h3 class="form-q-title">{{ label }}</h3>
       <p class="form-q-description">{{ description }}</p>
@@ -63,6 +63,10 @@ const props = defineProps({
   isRequired: {
     type: Boolean,
     default: true
+  },
+  isEmpty: {
+    type: Boolean,
+    default: false
   }
 })
 
