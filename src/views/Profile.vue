@@ -8,6 +8,8 @@ import { makeAPIRequest } from '@/utils/http'
 const authStore = useAuthStore()
 const userForms = ref([])
 
+import {PhEye, PhPen, PhPencil, PhTrash} from "@phosphor-icons/vue";
+
 onMounted(async () => {
   await authStore.prepareStore()
   if (!authStore.isAuthorized) {
@@ -29,15 +31,95 @@ async function deleteForm(index: Number) {
 </script>
 
 <template>
-  <div v-for="(form, index) in userForms" v-if="userForms.length > 0">
-    <h3>{{ form.data.name }}</h3>
-    <button @click="$router.push('/form/view/' + form.id)">view</button>
-    <button @click="$router.push('/form/update/' + form.id)">upd</button>
-    <button @click="deleteForm(index)">del</button>
+  <div class="profile">
+    <div class="container">
+      <h1 class="profile-title">Управление формами</h1>
+      <div class="profile-cards">
+        <div v-for="(form, index) in userForms" v-if="userForms.length > 0">
+          <div class="profile-card">
+            <div class="profile-card-title">{{ form.data.name }}</div>
+            <div class="profile-card-buttons">
+              <button class="profile-card-btn profile-card-btn--view" @click="$router.push('/form/view/' + form.id)"><div class="profile-card-btn-inner"><PhEye :size="24" /></div></button>
+              <button class="profile-card-btn profile-card-btn--update" @click="$router.push('/form/update/' + form.id)"><div class="profile-card-btn-inner"><PhPencil :size="24" /></div></button>
+              <button class="profile-card-btn profile-card-btn--delete" @click="deleteForm(index)"><div class="profile-card-btn-inner"><PhTrash :size="24" /></div></button>
+            </div>
+          </div>
+        </div>
+        <div v-else>
+          <h1>Формы не найдены.</h1>
+        </div>
+      </div>
+    </div>
   </div>
-  <div v-else>
-    <h1>Формы не найдены.</h1>
-  </div>
+
 </template>
 
-<style scoped></style>
+<style scoped lang="scss">
+.profile {
+  margin: 40px 0;
+
+  &-cards {
+    margin-top: 30px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 25px;
+  }
+
+
+
+  &-card {
+    border: 1px solid var(--color-main-border);
+    background: var(--color-secondary-background);
+    transition: 0.25s ease;
+    padding: 15px;
+    border-radius: 0.5rem;
+
+    &-title {
+      font-weight: 400;
+    }
+
+    &-buttons {
+      margin-top: 25px;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 15px;
+    }
+
+    &-btn {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 45px;
+      border-radius: 0.5rem;
+      transition: 0.25s ease;
+
+      &--view {
+        background: #d6e1ff;
+        border: 1px solid #a7beff;
+
+        &:hover {
+          background: #ccd9ff;
+        }
+      }
+
+      &--update {
+        background: #fff7cc;
+        border: 1px solid #f6e17a;
+
+        &:hover {
+          background: #fff4b2;
+        }
+      }
+
+      &--delete {
+        background: #ffd8d8;
+        border: 1px solid #ffb1b1;
+
+        &:hover {
+          background: #ffcece;
+        }
+      }
+    }
+  }
+}
+</style>
