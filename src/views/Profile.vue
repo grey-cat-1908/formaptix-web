@@ -8,7 +8,7 @@ import { makeAPIRequest } from '@/utils/http'
 const authStore = useAuthStore()
 const userForms = ref([])
 
-import {PhEye, PhPen, PhPencil, PhTrash} from "@phosphor-icons/vue";
+import { PhEye, PhPen, PhPencil, PhTrash } from '@phosphor-icons/vue'
 
 onMounted(async () => {
   await authStore.prepareStore()
@@ -39,9 +39,21 @@ async function deleteForm(index: Number) {
           <div class="profile-card">
             <div class="profile-card-title">{{ form.data.name }}</div>
             <div class="profile-card-buttons">
-              <button class="profile-card-btn profile-card-btn--view" @click="$router.push('/form/view/' + form.id)"><div class="profile-card-btn-inner"><PhEye :size="24" /></div></button>
-              <button class="profile-card-btn profile-card-btn--update" @click="$router.push('/form/update/' + form.id)"><div class="profile-card-btn-inner"><PhPencil :size="24" /></div></button>
-              <button class="profile-card-btn profile-card-btn--delete" @click="deleteForm(index)"><div class="profile-card-btn-inner"><PhTrash :size="24" /></div></button>
+              <button
+                class="profile-card-btn profile-card-btn--view"
+                @click="$router.push('/form/view/' + form.id)"
+              >
+                <div class="profile-card-btn-inner"><PhEye :size="24" /></div>
+              </button>
+              <button
+                class="profile-card-btn profile-card-btn--update"
+                @click="$router.push('/form/update/' + form.id)"
+              >
+                <div class="profile-card-btn-inner"><PhPencil :size="24" /></div>
+              </button>
+              <button class="profile-card-btn profile-card-btn--delete" @click="deleteForm(index)">
+                <div class="profile-card-btn-inner"><PhTrash :size="24" /></div>
+              </button>
             </div>
           </div>
         </div>
@@ -51,7 +63,6 @@ async function deleteForm(index: Number) {
       </div>
     </div>
   </div>
-
 </template>
 
 <style scoped lang="scss">
@@ -64,8 +75,6 @@ async function deleteForm(index: Number) {
     grid-template-columns: 1fr 1fr 1fr 1fr;
     gap: 25px;
   }
-
-
 
   &-card {
     border: 1px solid var(--color-main-border);

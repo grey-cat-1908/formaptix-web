@@ -22,7 +22,7 @@ const answers = ref([])
 const isFormNotFound = ref(true)
 const isSent = ref(false)
 
-const emptyQuestions = ref({});
+const emptyQuestions = ref({})
 
 async function prepareNewPage() {
   currentPage.value = data.value.pages[currentPageNumber.value]
@@ -38,7 +38,7 @@ function beforeSubmitValidate() {
   for (let question of currentPage.value.questions) {
     const answer = answers.value[question.id]
 
-    emptyQuestions.value[question.id] = true;
+    emptyQuestions.value[question.id] = true
 
     if (!answer) return false
     if (question.required && !answer.value && !answer.values) return false
