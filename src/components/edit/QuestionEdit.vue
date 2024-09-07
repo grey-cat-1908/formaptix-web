@@ -2,28 +2,50 @@
 import { PhX, PhXCircle } from '@phosphor-icons/vue'
 import { onMounted, ref } from 'vue'
 
+const props = defineProps({
+  data: {
+    type: Object,
+    default: {
+      label: 'Пустой Вопрос',
+      description: null,
+      question_type: 1,
+      required: false,
+      validator: null,
+      min_length: null,
+      max_length: null,
+      options: [],
+      min_values: null,
+      max_values: null,
+      min_value: 1,
+      max_value: 5,
+      min_label: null,
+      max_label: null
+    }
+  }
+})
 const emit = defineEmits(['input'])
 const data = ref({})
 
 onMounted(() => {
-  data.value = {
-    label: null,
-    description: null,
-    question_type: 1,
-    required: false,
-    validator: null,
-    min_length: null,
-    max_length: null
-  }
+  data.value = { ...props.data }
 })
 
 async function submitForm() {
-  if (data.value.question_type === 1 && data.value.validator === null) {
+  if (data.value.question_type === 1) {
     if (data.value.min_length !== null && data.value.min_length < 0) return
     if (data.value.max_length !== null) {
       if (data.value.max_length <= 0) return
       if (data.value.min_length !== null && data.value.max_length < data.value.min_length) return
     }
+  }
+  if (data.value.question_type === 2) {
+    if (data.value.options.length < 1) return
+    if (data.value.min_values && data.value.min_values < 1) return
+    if (data.value.max_values && data.value.min_values > data.value.max_values) return
+  }
+  if (data.value.question_type === 3) {
+    if (!(data.value.min_value in [0, 1])) return
+    if (data.value.max_value < 2 || data.value.max_value > 10) return
   }
 
   emit('input', data.value)
@@ -79,6 +101,61 @@ async function submitForm() {
                 </div>
               </div>
             </div>
+            <div class="" v-if="data.question_type === 2">
+              <div class="">
+                <div class="">
+                  <p>Варианты</p>
+                  <ul>
+                    <li v-for="(option, index) in data.options">
+                      <input v-model="data.options[index].label" />
+                      <span @click="data.options.splice(index, 1)">X</span>
+                    </li>
+                    <li>
+                      <span
+                        style="text-decoration: underline dashed"
+                        @click="data.options.push({ label: 'Вариант' })"
+                        >Добавить вариант</span
+                      >
+                    </li>
+                  </ul>
+                </div>
+                <div class="">
+                  <p>Минимум значений</p>
+                  <input v-model="data.min_values" type="number" placeholder="1" />
+                </div>
+                <div class="">
+                  <p>Максимум значений</p>
+                  <input v-model="data.max_values" type="number" />
+                </div>
+              </div>
+            </div>
+            <div class="" v-if="data.question_type === 3">
+              <div class="">
+                <div class="">
+                  <div class="">
+                    <p>
+                      От
+                      <select required v-model="data.min_value">
+                        <option :value="0">0</option>
+                        <option :value="1">1</option>
+                      </select>
+                      до
+                      <select required v-model="data.max_value">
+                        <option v-for="value in 9" :value="1 + value">{{ 1 + value }}</option>
+                      </select>
+                    </p>
+                  </div>
+                </div>
+                <div class="">
+                  <p>{{ data.min_value }}</p>
+                  <input v-model="data.min_label" />
+                </div>
+                <div class="">
+                  <p>{{ data.max_value }}</p>
+                  <input v-model="data.max_label" />
+                </div>
+              </div>
+            </div>
           </div>
           <div class="">
             <p>Обязательный?</p>
@@ -87,7 +164,7 @@ async function submitForm() {
               <span class="slider"></span>
             </label>
           </div>
-          <button type="submit">Сохранить</button>
+          <button>Сохранить</button>
         </form>
       </div>
     </div>
