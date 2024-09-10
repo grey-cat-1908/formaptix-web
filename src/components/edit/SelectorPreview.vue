@@ -1,18 +1,16 @@
 <template>
-  <div class="default-card">
-    <div class="view-form-q-title">
-      <h3 class="form-q-title">{{ label }} <span style="color: red" v-if="required">*</span></h3>
-      <p class="form-q-description">{{ description }}</p>
-    </div>
-    <div class="selector">
-      <div class="selector-options">
-        <div
-          v-for="(option, index) in options"
-          :key="index"
-          class="selector-option default-button"
-        >
-          <span>{{ option.label }}</span>
-        </div>
+  <div class="view-form-q-title">
+    <h3 class="form-q-title">{{ label }} <span style="color: red" v-if="required">*</span></h3>
+    <p class="form-q-description">{{ description }}</p>
+  </div>
+  <div class="selector">
+    <div class="selector-options">
+      <div
+        v-for="(option, index) in options"
+        :key="index"
+        class="selector-option default-button"
+      >
+        <span>{{ option.label }}</span>
       </div>
     </div>
   </div>

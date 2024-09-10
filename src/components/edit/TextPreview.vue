@@ -1,12 +1,10 @@
 <template>
-  <div class="default-card">
-    <div class="view-form-q-title">
-      <h3 class="form-q-title">{{ label }} <span style="color: red" v-if="required">*</span></h3>
-      <p class="form-q-description">{{ description }}</p>
-    </div>
-    <div class="text-question">
-      <input class="text-question-input" placeholder="Ответ на вопрос" type="text" readonly />
-    </div>
+  <div class="view-form-q-title">
+    <h3 class="form-q-title">{{ label }} <span style="color: red" v-if="required">*</span></h3>
+    <p class="form-q-description">{{ description }}</p>
+  </div>
+  <div class="text-question">
+    <input class="text-question-input" placeholder="Ответ на вопрос" type="text" readonly />
   </div>
 </template>
 

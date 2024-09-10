@@ -1,16 +1,14 @@
 <template>
-  <div class="default-card">
-    <div class="view-form-q-title">
-      <h3 class="form-q-title">{{ label }} <span style="color: red" v-if="required">*</span></h3>
-      <p class="form-q-description">{{ description }}</p>
-    </div>
-    <div class="rating">
-      <div class="rating-options">
-        <label v-for="n in range" :key="n" class="rating-option">
-          <input type="radio" :value="n" class="rating-option--btn" />
-          <span>{{ n }}</span>
-        </label>
-      </div>
+  <div class="view-form-q-title">
+    <h3 class="form-q-title">{{ label }} <span style="color: red" v-if="required">*</span></h3>
+    <p class="form-q-description">{{ description }}</p>
+  </div>
+  <div class="rating">
+    <div class="rating-options">
+      <label v-for="n in range" :key="n" class="rating-option">
+        <input type="radio" :value="n" class="rating-option--btn" />
+        <span>{{ n }}</span>
+      </label>
     </div>
   </div>
 </template>
