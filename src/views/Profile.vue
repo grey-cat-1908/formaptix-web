@@ -28,12 +28,30 @@ async function deleteForm(index: Number) {
   await makeAPIRequest('/form/delete', 'DELETE', { id: form.id }, {}, true)
   userForms.value.splice(index, 1)
 }
+
+async function createForm() {
+  const formResponse = await makeAPIRequest(
+    '/form/create',
+    'POST',
+    null,
+    {
+      name: 'Новая форма',
+      pages: [{ text: 'Пустая страница', questions: [] }]
+    },
+    true
+  )
+  if (!formResponse.json || formResponse.status !== 200) {
+    return
+  }
+  userForms.value.push(formResponse.json)
+}
 </script>
 
 <template>
-  <div class="profile">
+  <div class="profile" v-if="authStore.isAuthorized">
     <div class="container">
       <h1 class="profile-title">Управление формами</h1>
+      <button @click="createForm">Создать</button>
       <div class="profile-cards">
         <div v-for="(form, index) in userForms" v-if="userForms.length > 0">
           <div class="profile-card">
@@ -47,7 +65,7 @@ async function deleteForm(index: Number) {
               </button>
               <button
                 class="profile-card-btn profile-card-btn--update"
-                @click="$router.push('/form/update/' + form.id)"
+                @click="$router.push('/form/edit/' + form.id)"
               >
                 <div class="profile-card-btn-inner"><PhPencil :size="24" /></div>
               </button>

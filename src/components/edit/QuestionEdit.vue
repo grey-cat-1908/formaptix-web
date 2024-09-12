@@ -14,7 +14,7 @@ const props = defineProps({
       min_length: null,
       max_length: null,
       options: [],
-      min_values: null,
+      min_values: 1,
       max_values: null,
       min_value: 1,
       max_value: 5,

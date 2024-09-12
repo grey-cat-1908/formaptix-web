@@ -4,10 +4,16 @@ import { useAuthStore } from '@/stores/auth'
 
 import { PhList } from '@phosphor-icons/vue'
 import { ref } from 'vue'
+import router from '@/router'
 
 const authStore = useAuthStore()
 
 const isToggled = ref(false)
+
+async function logout() {
+  authStore.logout()
+  await router.push('/')
+}
 </script>
 
 <template>
@@ -25,7 +31,7 @@ const isToggled = ref(false)
             <button class="header-nickname" type="button" @click="$router.push('/profile')">
               {{ authStore.user.username }}
             </button>
-            <button class="default-button header-leave-btn" type="button" @click="authStore.logout">
+            <button class="default-button header-leave-btn" type="button" @click="logout">
               Выйти
             </button>
           </div>

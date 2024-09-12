@@ -5,11 +5,7 @@
   </div>
   <div class="selector">
     <div class="selector-options">
-      <div
-        v-for="(option, index) in options"
-        :key="index"
-        class="selector-option default-button"
-      >
+      <div v-for="(option, index) in options" :key="index" class="selector-option default-button">
         <span>{{ option.label }}</span>
       </div>
     </div>

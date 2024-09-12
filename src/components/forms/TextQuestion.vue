@@ -1,7 +1,7 @@
 <template>
   <div class="default-card" :class="{ 'form-red': error || isEmpty }">
     <div class="view-form-q-title">
-      <h3 class="form-q-title">{{ label }}</h3>
+      <h3 class="form-q-title">{{ label }} <span style="color: red" v-if="isRequired">*</span></h3>
       <p class="form-q-description">{{ description }}</p>
     </div>
     <img v-if="imageUrl" :src="imageUrl" alt="image by user" />

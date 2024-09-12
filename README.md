@@ -59,7 +59,7 @@ If you have any questions or want to get involved in the project in any way, you
 
 ## Acknowledgements
 
-Thanks to my friend Vyacheslav ([flyare](https://github.com/flyare1337)) with frontend and layout design.
+Thanks to my friend Vyacheslav ([flyare](https://github.com/flyare1337)) for help with frontend and layout design.
 
 ## License
 

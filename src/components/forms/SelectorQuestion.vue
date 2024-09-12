@@ -1,7 +1,7 @@
 <template>
   <div class="default-card" :class="{ 'form-red': error || isEmpty }">
     <div class="view-form-q-title">
-      <h3 class="form-q-title">{{ label }}</h3>
+      <h3 class="form-q-title">{{ label }} <span style="color: red" v-if="isRequired">*</span></h3>
       <p class="form-q-description">{{ description }}</p>
     </div>
     <img v-if="imageUrl" :src="imageUrl" alt="image by user" />
@@ -10,7 +10,8 @@
         <div class="selector-labels-info">
           <PhCaretCircleUpDown :size="23" class="selector-labels-info--sign" />
           <div class="selector-labels-info--text">
-            Выберите от {{ minValues }} до {{ Math.min(maxValues, options.length) }}
+            Выберите от {{ minValues }} до
+            {{ Math.min(maxValues ?? options.length, options.length) }}
             {{
               normalizeCountForm(Math.min(maxValues, options.length), [
                 'варианта',
