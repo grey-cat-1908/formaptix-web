@@ -8,7 +8,7 @@ import { makeAPIRequest } from '@/utils/http'
 const authStore = useAuthStore()
 const userForms = ref([])
 
-import {PhEye, PhInfo, PhPen, PhPencil, PhTrash, PhUserList} from '@phosphor-icons/vue'
+import { PhEye, PhInfo, PhPen, PhPencil, PhTrash, PhUserList } from '@phosphor-icons/vue'
 
 onMounted(async () => {
   await authStore.prepareStore()
@@ -53,30 +53,41 @@ async function createForm() {
       <h1 class="profile-title">Профиль пользователя</h1>
       <div class="profile-ctrl-card">
         <div class="profile-ctrl-buttons">
-          <button @click="createForm" class="default-button profile-ctrl-btn profile-ctrl-btn--create">Создать форму</button>
-<!--          <button @click="createForm" class="default-button profile-ctrl-btn profile-ctrl-btn&#45;&#45;creat">Очистить все формы</button>-->
-          <button @click="createForm" class="default-button profile-ctrl-btn profile-ctrl-btn--deleteacc">Удалить аккаунт</button>
+          <button
+            @click="createForm"
+            class="default-button profile-ctrl-btn profile-ctrl-btn--create"
+          >
+            Создать форму
+          </button>
+          <!--          <button @click="createForm" class="default-button profile-ctrl-btn profile-ctrl-btn&#45;&#45;creat">Очистить все формы</button>-->
+          <button
+            @click="createForm"
+            class="default-button profile-ctrl-btn profile-ctrl-btn--deleteacc"
+          >
+            Удалить аккаунт
+          </button>
           <div class="profile-ctrl-info">
-            <PhInfo :size="22" class="profile-ctrl-info--sign" /> После удаления аккаунта вернуть данные невозможно
+            <PhInfo :size="22" class="profile-ctrl-info--sign" /> После удаления аккаунта вернуть
+            данные невозможно
           </div>
         </div>
       </div>
       <div class="profile-cards">
         <div class="profile-card" v-for="(form, index) in userForms" v-if="userForms.length > 0">
           <div class="profile-card-title">
-<!--            <code class="profile-card-num">001</code>-->
+            <!--            <code class="profile-card-num">001</code>-->
             {{ form.data.name }}
           </div>
           <div class="profile-card-buttons">
             <button
-                class="profile-card-btn profile-card-btn--upd"
-                @click="$router.push('/form/edit/' + form.id)"
+              class="profile-card-btn profile-card-btn--upd"
+              @click="$router.push('/form/edit/' + form.id)"
             >
               <div class="profile-card-btn-inner"><PhPencil :size="26" /></div>
             </button>
             <button
-                class="profile-card-btn profile-card-btn--upd"
-                @click="$router.push('/form/edit/' + form.id)"
+              class="profile-card-btn profile-card-btn--upd"
+              @click="$router.push('/form/answers/' + form.id)"
             >
               <div class="profile-card-btn-inner"><PhUserList :size="26" /></div>
             </button>
@@ -104,7 +115,6 @@ async function createForm() {
   margin: 40px 0;
 
   &-ctrl {
-
     &-info {
       display: flex;
       align-items: center;
@@ -143,15 +153,12 @@ async function createForm() {
         border: 1px solid var(--color-third-border);
       }
 
-
-
       @media (max-width: 500px) {
         width: 100%;
       }
 
       &--create {
         color: var(--color-main);
-
       }
 
       &--deleteacc {
@@ -160,7 +167,6 @@ async function createForm() {
       }
     }
   }
-
 
   &-cards {
     margin-top: 30px;
@@ -181,11 +187,9 @@ async function createForm() {
     //cursor: pointer;
 
     &:hover {
-
       //background: var(--color-main-border);
-
     }
-    
+
     @media (max-width: 680px) {
       flex-direction: column;
       align-items: start;
@@ -227,9 +231,7 @@ async function createForm() {
       display: flex;
       justify-content: center;
       align-items: center;
-      transition:  0.25s ease;
-
-
+      transition: 0.25s ease;
 
       &:hover {
         opacity: 0.7;
@@ -238,7 +240,6 @@ async function createForm() {
       &--delete {
         color: var(--color-red);
       }
-
     }
 
     &-title {
@@ -262,5 +263,4 @@ async function createForm() {
     }
   }
 }
-
 </style>

@@ -5,7 +5,21 @@
       <p class="form-q-description">{{ description }}</p>
     </div>
     <img v-if="imageUrl" :src="imageUrl" alt="image by user" />
-    <div class="text-question">
+    <div v-if="isTextarea" class="text-question">
+      <textarea
+        class="text-question-input"
+        v-model="inputValue"
+        :maxlength="maxLength"
+        :required="isRequired"
+        @input="validateInput"
+        @blur="validateInput"
+        placeholder="Ваш ответ"
+      />
+      <p v-if="error" class="text-question-error">
+        <PhXCircle class="text-question-error--sign" :size="23" />{{ error }}
+      </p>
+    </div>
+    <div v-else class="text-question">
       <input
         class="text-question-input"
         type="text"
@@ -65,6 +79,10 @@ const props = defineProps({
     default: true
   },
   isEmpty: {
+    type: Boolean,
+    default: false
+  },
+  isTextarea: {
     type: Boolean,
     default: false
   }

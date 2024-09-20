@@ -3,7 +3,10 @@
     <h3 class="form-q-title">{{ label }} <span style="color: red" v-if="required">*</span></h3>
     <p class="form-q-description">{{ description }}</p>
   </div>
-  <div class="text-question">
+  <div v-if="textarea" class="text-question">
+    <textarea class="text-question-input" placeholder="Ответ на вопрос" readonly />
+  </div>
+  <div v-else class="text-question">
     <input class="text-question-input" placeholder="Ответ на вопрос" type="text" readonly />
   </div>
 </template>
@@ -21,6 +24,10 @@ const props = defineProps({
     default: null
   },
   required: {
+    type: Boolean,
+    default: null
+  },
+  textarea: {
     type: Boolean,
     default: null
   }

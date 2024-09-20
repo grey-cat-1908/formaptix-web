@@ -125,6 +125,7 @@ onMounted(async () => {
               :label="element.label"
               :description="element.description"
               :required="element.required"
+              :textarea="element.textarea"
             />
             <SelectorPreview
               v-if="element.question_type === 2"

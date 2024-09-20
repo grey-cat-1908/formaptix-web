@@ -4,7 +4,10 @@
       <h3 class="form-q-title">{{ label }}</h3>
       <p class="form-q-description">{{ description }}</p>
     </div>
-    <div class="text-question">
+    <div v-if="textarea" class="text-question">
+      <textarea class="text-question-input" :value="modelValue" readonly />
+    </div>
+    <div v-else class="text-question">
       <input class="text-question-input" type="text" :value="modelValue" readonly />
     </div>
   </div>
@@ -25,6 +28,10 @@ const props = defineProps({
   modelValue: {
     type: Array,
     default: () => []
+  },
+  textarea: {
+    type: Boolean,
+    default: null
   }
 })
 </script>

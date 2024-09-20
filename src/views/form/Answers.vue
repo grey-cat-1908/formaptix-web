@@ -61,6 +61,7 @@ onMounted(async () => {
           v-if="questionsData[value.question_id].question_type === 1"
           :label="questionsData[value.question_id].label"
           :description="questionsData[value.question_id].description"
+          :textarea="questionsData[value.question_id].textarea"
           v-model="value.value"
         />
         <SelectorValue

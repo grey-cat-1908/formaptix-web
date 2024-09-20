@@ -18,7 +18,7 @@ const data = ref({})
 const currentPageNumber = ref(0)
 const pageCount = ref(0)
 const currentPage = ref({})
-const answers = ref([])
+const answers = ref({})
 const isFormNotFound = ref(true)
 const isSent = ref(false)
 
@@ -29,7 +29,9 @@ async function prepareNewPage() {
   currentPage.value.questions.forEach((q) => {
     answers.value[q.id] = {
       question_id: q.id,
-      question_type: q.question_type
+      question_type: q.question_type,
+      value: null,
+      values: null
     }
   })
 }
@@ -120,6 +122,7 @@ onMounted(async () => {
             <div class="view-form-q view-form-container">
               <div v-for="question in currentPage.questions">
                 <TextQuestion
+                  :key="question.id"
                   v-if="question.question_type === 1"
                   :label="question.label"
                   :description="question.description"
@@ -128,11 +131,13 @@ onMounted(async () => {
                   :maxLength="question.max_length"
                   :validator="question.validator"
                   :isRequired="question.required"
+                  :isTextarea="question.textarea"
                   :isEmpty="emptyQuestions[question.id]"
                   v-model="answers[question.id].value"
                   @input="answers[question.id].value = $event"
                 />
                 <SelectorQuestion
+                  :key="question.id"
                   v-if="question.question_type === 2"
                   :label="question.label"
                   :description="question.description"
@@ -146,6 +151,7 @@ onMounted(async () => {
                   @input="answers[question.id].values = $event"
                 />
                 <Scale
+                  :key="question.id"
                   v-if="question.question_type === 3"
                   :label="question.label"
                   :description="question.description"

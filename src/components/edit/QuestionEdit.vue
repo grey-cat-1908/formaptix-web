@@ -19,7 +19,8 @@ const props = defineProps({
       min_value: 1,
       max_value: 5,
       min_label: null,
-      max_label: null
+      max_label: null,
+      textarea: false
     }
   }
 })
@@ -83,6 +84,13 @@ async function submitForm() {
           <div class="question-data">
             <div class="" v-if="data.question_type === 1">
               <div class="">
+                <div class="">
+                  <p>Развернутый?</p>
+                  <label class="switch">
+                    <input v-model="data.textarea" type="checkbox" />
+                    <span class="slider"></span>
+                  </label>
+                </div>
                 <p>Валидатор</p>
                 <select v-model="data.validator" id="question-type">
                   <option :value="null">Текст</option>
