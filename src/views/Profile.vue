@@ -8,7 +8,7 @@ import { makeAPIRequest } from '@/utils/http'
 const authStore = useAuthStore()
 const userForms = ref([])
 
-import { PhEye, PhPen, PhPencil, PhTrash } from '@phosphor-icons/vue'
+import {PhEye, PhInfo, PhPen, PhPencil, PhTrash} from '@phosphor-icons/vue'
 
 onMounted(async () => {
   await authStore.prepareStore()
@@ -50,8 +50,17 @@ async function createForm() {
 <template>
   <div class="profile" v-if="authStore.isAuthorized">
     <div class="container">
-      <h1 class="profile-title">Управление формами</h1>
-      <button @click="createForm">Создать</button>
+      <h1 class="profile-title">Профиль пользователя</h1>
+      <div class="profile-ctrl-card">
+        <div class="profile-ctrl-buttons">
+          <button @click="createForm" class="default-button profile-ctrl-btn profile-ctrl-btn--create">Создать форму</button>
+<!--          <button @click="createForm" class="default-button profile-ctrl-btn profile-ctrl-btn&#45;&#45;creat">Очистить все формы</button>-->
+          <button @click="createForm" class="default-button profile-ctrl-btn profile-ctrl-btn--deleteacc">Удалить аккаунт</button>
+          <div class="view-form-info">
+            <PhInfo :size="22" class="view-form-info--sign" /> После удаления аккаунта вернуть данные невозможно
+          </div>
+        </div>
+      </div>
       <div class="profile-cards">
         <div class="profile-card" v-for="(form, index) in userForms" v-if="userForms.length > 0">
           <div class="profile-card-title">
@@ -81,6 +90,52 @@ async function createForm() {
 <style scoped lang="scss">
 .profile {
   margin: 40px 0;
+
+  &-ctrl {
+
+    &-card {
+      margin-top: 30px;
+      width: 100%;
+      //border: 1px solid var(--color-main-border);
+      //background: var(--color-secondary-background);
+      //padding: 25px;
+      border-radius: 1rem;
+    }
+
+    &-buttons {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px 20px;
+    }
+
+    &-btn {
+      //width: 100%;
+      padding: 15px 30px;
+      border-radius: 1rem;
+
+      &:hover {
+        border: 1px solid var(--color-third-border);
+      }
+
+
+
+      @media (max-width: 500px) {
+        width: 100%;
+      }
+
+      &--create {
+        color: var(--color-main);
+
+      }
+
+      &--deleteacc {
+        color: var(--color-red);
+        //border: 1px solid var(--color-red);
+      }
+    }
+  }
+
 
   &-cards {
     margin-top: 30px;
