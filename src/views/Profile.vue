@@ -8,7 +8,7 @@ import { makeAPIRequest } from '@/utils/http'
 const authStore = useAuthStore()
 const userForms = ref([])
 
-import {PhEye, PhInfo, PhPen, PhPencil, PhTrash} from '@phosphor-icons/vue'
+import {PhEye, PhInfo, PhPen, PhPencil, PhTrash, PhUserList} from '@phosphor-icons/vue'
 
 onMounted(async () => {
   await authStore.prepareStore()
@@ -56,18 +56,30 @@ async function createForm() {
           <button @click="createForm" class="default-button profile-ctrl-btn profile-ctrl-btn--create">Создать форму</button>
 <!--          <button @click="createForm" class="default-button profile-ctrl-btn profile-ctrl-btn&#45;&#45;creat">Очистить все формы</button>-->
           <button @click="createForm" class="default-button profile-ctrl-btn profile-ctrl-btn--deleteacc">Удалить аккаунт</button>
-          <div class="view-form-info">
-            <PhInfo :size="22" class="view-form-info--sign" /> После удаления аккаунта вернуть данные невозможно
+          <div class="profile-ctrl-info">
+            <PhInfo :size="22" class="profile-ctrl-info--sign" /> После удаления аккаунта вернуть данные невозможно
           </div>
         </div>
       </div>
       <div class="profile-cards">
         <div class="profile-card" v-for="(form, index) in userForms" v-if="userForms.length > 0">
           <div class="profile-card-title">
-            <code class="profile-card-num">001</code>
+<!--            <code class="profile-card-num">001</code>-->
             {{ form.data.name }}
           </div>
           <div class="profile-card-buttons">
+            <button
+                class="profile-card-btn profile-card-btn--upd"
+                @click="$router.push('/form/edit/' + form.id)"
+            >
+              <div class="profile-card-btn-inner"><PhPencil :size="26" /></div>
+            </button>
+            <button
+                class="profile-card-btn profile-card-btn--upd"
+                @click="$router.push('/form/edit/' + form.id)"
+            >
+              <div class="profile-card-btn-inner"><PhUserList :size="26" /></div>
+            </button>
             <button
               class="profile-card-btn profile-card-btn--view"
               @click="$router.push('/form/view/' + form.id)"
@@ -92,6 +104,19 @@ async function createForm() {
   margin: 40px 0;
 
   &-ctrl {
+
+    &-info {
+      display: flex;
+      align-items: center;
+      gap: 0 11px;
+      color: var(--color-subtext);
+      font-size: 16px;
+
+      &--sign {
+        min-width: 23px;
+        min-height: 23px;
+      }
+    }
 
     &-card {
       margin-top: 30px;
@@ -153,15 +178,32 @@ async function createForm() {
     border-bottom: 2px solid var(--color-secondary-border);
     border-top: 2px solid transparent;
     transition: 0.4s ease;
-    cursor: pointer;
+    //cursor: pointer;
 
     &:hover {
-      ////border: 1px solid var(--color-main-border);
-      background: var(--color-main-border);
-      ////border-radius: 0.5rem;
-      //transform: scale(1.03);
-      //border-bottom: 2px solid var(--color-third-border) !important;
-      //border-top: 2px solid var(--color-third-border);
+
+      //background: var(--color-main-border);
+
+    }
+    
+    @media (max-width: 680px) {
+      flex-direction: column;
+      align-items: start;
+
+      .profile-card-buttons {
+        margin-left: 0;
+        margin-top: 10px;
+        width: 100%;
+        gap: 0 15px;
+      }
+
+      .profile-card-btn {
+        width: 100%;
+        height: 40px;
+        border: 1px solid var(--color-main-border);
+        background: var(--color-secondary-background);
+        border-radius: 0.5rem;
+      }
     }
 
     &:hover &-num {
@@ -176,6 +218,7 @@ async function createForm() {
       display: flex;
       align-items: center;
       gap: 0 10px;
+      margin-left: 20px;
     }
 
     &-btn {
@@ -185,6 +228,7 @@ async function createForm() {
       justify-content: center;
       align-items: center;
       transition:  0.25s ease;
+
 
 
       &:hover {
@@ -202,6 +246,10 @@ async function createForm() {
       font-weight: 400;
       align-items: center;
       gap: 0 15px;
+
+      @media (max-width: 500px) {
+        font-size: 0.95rem;
+      }
     }
 
     &-num {
@@ -214,69 +262,5 @@ async function createForm() {
     }
   }
 }
-//.profile {
-//  margin: 40px 0;
-//
-//  &-cards {
-//    margin-top: 30px;
-//    display: grid;
-//    grid-template-columns: 1fr 1fr 1fr 1fr;
-//    gap: 25px;
-//  }
-//
-//  &-card {
-//    border: 1px solid var(--color-main-border);
-//    background: var(--color-secondary-background);
-//    transition: 0.25s ease;
-//    padding: 15px;
-//    border-radius: 0.5rem;
-//
-//    &-title {
-//      font-weight: 400;
-//    }
-//
-//    &-buttons {
-//      margin-top: 25px;
-//      display: grid;
-//      grid-template-columns: 1fr 1fr 1fr;
-//      gap: 15px;
-//    }
-//
-//    &-btn {
-//      display: flex;
-//      justify-content: center;
-//      align-items: center;
-//      height: 45px;
-//      border-radius: 0.5rem;
-//      transition: 0.25s ease;
-//
-//      &--view {
-//        background: #d6e1ff;
-//        border: 1px solid #a7beff;
-//
-//        &:hover {
-//          background: #ccd9ff;
-//        }
-//      }
-//
-//      &--update {
-//        background: #fff7cc;
-//        border: 1px solid #f6e17a;
-//
-//        &:hover {
-//          background: #fff4b2;
-//        }
-//      }
-//
-//      &--delete {
-//        background: #ffd8d8;
-//        border: 1px solid #ffb1b1;
-//
-//        &:hover {
-//          background: #ffcece;
-//        }
-//      }
-//    }
-//  }
-//}
+
 </style>
