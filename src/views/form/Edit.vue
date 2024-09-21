@@ -9,6 +9,7 @@ import ScalePreview from '@/components/edit/ScalePreview.vue'
 import { makeAPIRequest } from '@/utils/http'
 import { useRoute } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
+import {PhFilePlus, PhFloppyDisk, PhRowsPlusBottom} from "@phosphor-icons/vue";
 
 const route = useRoute()
 const authStore = useAuthStore()
@@ -96,59 +97,68 @@ onMounted(async () => {
     @input="editQuestion($event)"
     :data="pages[currentPage].questions[currentQuestion]"
   />
-  <div class="">
-    <button @click="showCreateDialog = true">Создать вопрос</button>
-    <button @click="pages.push({ text: null, questions: [] })">Создать страницу</button>
-    <button @click="submitSave">Сохранить</button>
-  </div>
-  <div style="user-select: none">
-    <input type="text" v-model="formName" />
-    <div v-for="(page, pageIndex) in pages">
-      <div>
-        <h3>Страница {{ pageIndex + 1 }}</h3>
-        <textarea placeholder="Описание" v-model="page.text" />
-        <button @click="deletePage(pageIndex)" v-if="pages.length > 1">X</button>
-      </div>
-      <hr />
-      <draggable
-        fallback-class="fallbackStyleClass"
-        ghost-class="ghost"
-        direction="vertical"
-        :force-fallback="true"
-        group="questions"
-        :list="page.questions"
-      >
-        <template #item="{ element, index }">
-          <div class="default-card" style="cursor: move !important">
-            <TextPreview
-              v-if="element.question_type === 1"
-              :label="element.label"
-              :description="element.description"
-              :required="element.required"
-              :textarea="element.textarea"
-            />
-            <SelectorPreview
-              v-if="element.question_type === 2"
-              :label="element.label"
-              :description="element.description"
-              :required="element.required"
-              :options="element.options"
-            />
-            <ScalePreview
-              v-if="element.question_type === 3"
-              :label="element.label"
-              :description="element.description"
-              :required="element.required"
-              :min="element.min_value"
-              :max="element.max_value"
-              :minLabel="element.min_label"
-              :maxLabel="element.max_label"
-            />
-            <button @click="deleteQuestion(pageIndex, index)">X</button>
-            <button @click="queueQuestionEdit(pageIndex, index)">Редактировать</button>
+  <div class="edit">
+    <div class="container">
+      <div class="edit-form edit-form-container">
+        <div class="default-card edit-ctrl-card">
+          <button @click="showCreateDialog = true" class="edit-ctrl-card-btn edit-ctrl-card-btn--newa"><PhRowsPlusBottom :size="30" /></button>
+          <button @click="pages.push({ text: null, questions: [] })" class="edit-ctrl-card-btn edit-ctrl-card-btn--newp"><PhFilePlus :size="30" /></button>
+          <button @click="submitSave" class="edit-ctrl-card-btn edit-ctrl-card-btn--save"><PhFloppyDisk :size="30" /></button>
+        </div>
+        <div style="user-select: none" class="">
+          <div class="default-card highlight-card form-card-formtitle view-form-title">
+            <h3 class="view-form-q-title">Название формы</h3>
+            <input type="text" v-model="formName" class="default-input" />
           </div>
-        </template>
-      </draggable>
+          <div v-for="(page, pageIndex) in pages">
+            <div>
+              <h3>Страница {{ pageIndex + 1 }}</h3>
+              <textarea placeholder="Описание" v-model="page.text" />
+              <button @click="deletePage(pageIndex)" v-if="pages.length > 1">X</button>
+            </div>
+            <hr />
+            <draggable
+              fallback-class="fallbackStyleClass"
+              ghost-class="ghost"
+              direction="vertical"
+              :force-fallback="true"
+              group="questions"
+              :list="page.questions"
+            >
+              <template #item="{ element, index }">
+                <div class="default-card" style="cursor: move !important">
+                  <TextPreview
+                    v-if="element.question_type === 1"
+                    :label="element.label"
+                    :description="element.description"
+                    :required="element.required"
+                    :textarea="element.textarea"
+                  />
+                  <SelectorPreview
+                    v-if="element.question_type === 2"
+                    :label="element.label"
+                    :description="element.description"
+                    :required="element.required"
+                    :options="element.options"
+                  />
+                  <ScalePreview
+                    v-if="element.question_type === 3"
+                    :label="element.label"
+                    :description="element.description"
+                    :required="element.required"
+                    :min="element.min_value"
+                    :max="element.max_value"
+                    :minLabel="element.min_label"
+                    :maxLabel="element.max_label"
+                  />
+                  <button @click="deleteQuestion(pageIndex, index)">X</button>
+                  <button @click="queueQuestionEdit(pageIndex, index)">Редактировать</button>
+                </div>
+              </template>
+            </draggable>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -189,5 +199,89 @@ onMounted(async () => {
 .notification-appear-leave-active {
   transition-timing-function: ease;
   transition-duration: 0.2s;
+}
+
+.default-input {
+  width: 100% !important;
+  background: var(--color-main-background);
+  border: 1px solid var(--color-main-border);
+  padding: 10px 20px;
+  font-weight: 200;
+  border-radius: 0.5rem;
+  outline: 0;
+  transition:
+      border,
+      background 0.25s ease;
+
+  &:hover {
+    border: 1px solid var(--color-secondary-border);
+  }
+
+  &:focus {
+    border: 1px solid var(--color-third-border);
+    background: var(--color-input-background);
+  }
+}
+
+.highlight-card {
+
+}
+
+.edit {
+  margin: 40px 0;
+
+  &-form {
+    display: flex;
+    flex-direction: column;
+    //gap: 25px 0;
+
+    &-container {
+      display: grid;
+      grid-template-columns: 75px calc(100% - 95px);
+      gap: 0 20px;
+      align-items: start;
+      margin: 0 auto;
+      max-width: 880px;
+    }
+  }
+
+  &-ctrl-card {
+    padding: 10px;
+    position: sticky;
+    top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px 0;
+
+    &-btn {
+      width: 45px;
+      height: 45px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 0.5rem;
+      transition: 0.15s ease-in-out;
+
+      &:hover {
+        opacity: 0.9;
+      }
+
+      &:active {
+        background: var(--color-main-toned);
+      }
+
+      &--newp, &--newa {
+        background: #d6e1ff;
+        border: 1px solid #a7beff;
+      }
+
+      &--save {
+        background: #d0ffc6;
+        border: 1px solid #52c042;
+      }
+    }
+  }
 }
 </style>
