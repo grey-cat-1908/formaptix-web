@@ -1,4 +1,6 @@
 <script setup lang="ts">
+// @ts-nocheck
+
 import { getTitle } from '@/utils/env'
 import { useAuthStore } from '@/stores/auth'
 

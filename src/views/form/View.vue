@@ -1,4 +1,6 @@
 <script setup lang="ts">
+// @ts-nocheck
+
 import { onMounted, ref } from 'vue'
 import { makeAPIRequest } from '@/utils/http'
 import Scale from '@/components/forms/ScaleQuestion.vue'

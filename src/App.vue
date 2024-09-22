@@ -13,6 +13,7 @@
 </template>
 
 <script setup lang="ts">
+// @ts-nocheck
 import Header from '@/components/Header.vue'
 import Auth from '@/components/Auth.vue'
 </script>

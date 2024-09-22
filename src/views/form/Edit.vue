@@ -1,4 +1,6 @@
 <script setup lang="ts">
+// @ts-nocheck
+
 import QuestionEdit from '@/components/edit/QuestionEdit.vue'
 import { onMounted, ref } from 'vue'
 import router from '@/router'

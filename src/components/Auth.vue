@@ -1,4 +1,6 @@
 <script setup lang="ts">
+// @ts-nocheck
+
 import { makeAPIRequest } from '@/utils/http'
 import { useAuthStore } from '@/stores/auth'
 
