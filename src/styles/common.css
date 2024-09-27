@@ -126,3 +126,25 @@ button {
 .default-button:hover {
   border: 1px solid var(--color-secondary-border);
 }
+
+::-webkit-scrollbar {
+  background: var(--color-background);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-third-border);
+  border: 5px solid var(--color-main-background);
+  border-radius: 10rem;
+}
+
+
+
+::selection {
+  background: rgba(92, 139, 253, 0.1);
+  text-shadow: none;
+}
+
+::-moz-selection {
+  background: rgba(92, 139, 253, 0.1);
+  text-shadow: none;
+}
