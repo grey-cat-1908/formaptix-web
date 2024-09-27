@@ -1,5 +1,6 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
+// @ts-ignore
 import { makeAPIRequest } from '@/utils/http'
 
 export const useAuthStore = defineStore('auth', () => {

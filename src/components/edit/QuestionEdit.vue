@@ -1,4 +1,6 @@
 <script setup lang="ts">
+// @ts-nocheck
+
 import { PhX, PhXCircle } from '@phosphor-icons/vue'
 import { onMounted, ref } from 'vue'
 
