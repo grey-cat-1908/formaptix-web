@@ -11,7 +11,9 @@ import ScalePreview from '@/components/edit/ScalePreview.vue'
 import { makeAPIRequest } from '@/utils/http'
 import { useRoute } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
-import {PhFilePlus, PhFloppyDisk, PhRowsPlusBottom, PhTrash} from "@phosphor-icons/vue";
+import {PhDotsSixVertical, PhFilePlus, PhFloppyDisk, PhRowsPlusBottom, PhTrash} from "@phosphor-icons/vue";
+
+import EditControl from "@/components/EditControl.vue";
 
 const route = useRoute()
 const authStore = useAuthStore()
@@ -88,6 +90,7 @@ onMounted(async () => {
 </script>
 
 <template>
+  <EditControl />
   <transition-group name="notification-appear">
     <div class="notification" v-if="savedNotify">
       <div class="save-success">Успешно сохранено!</div>
@@ -133,33 +136,38 @@ onMounted(async () => {
                 :list="page.questions"
               >
                 <template #item="{ element, index }">
-                  <div class="default-card" style="cursor: move !important">
-                    <TextPreview
-                      v-if="element.question_type === 1"
-                      :label="element.label"
-                      :description="element.description"
-                      :required="element.required"
-                      :textarea="element.textarea"
-                    />
-                    <SelectorPreview
-                      v-if="element.question_type === 2"
-                      :label="element.label"
-                      :description="element.description"
-                      :required="element.required"
-                      :options="element.options"
-                    />
-                    <ScalePreview
-                      v-if="element.question_type === 3"
-                      :label="element.label"
-                      :description="element.description"
-                      :required="element.required"
-                      :min="element.min_value"
-                      :max="element.max_value"
-                      :minLabel="element.min_label"
-                      :maxLabel="element.max_label"
-                    />
-                    <button @click="deleteQuestion(pageIndex, index)">X</button>
-                    <button @click="queueQuestionEdit(pageIndex, index)">Редактировать</button>
+                  <div class="default-card edit-form-card" style="cursor: move !important">
+                    <div class="edit-form-card-move">
+                      <PhDotsSixVertical :size="30" />
+                    </div>
+                    <div class="edit-form-card-main">
+                      <TextPreview
+                        v-if="element.question_type === 1"
+                        :label="element.label"
+                        :description="element.description"
+                        :required="element.required"
+                        :textarea="element.textarea"
+                      />
+                      <SelectorPreview
+                        v-if="element.question_type === 2"
+                        :label="element.label"
+                        :description="element.description"
+                        :required="element.required"
+                        :options="element.options"
+                      />
+                      <ScalePreview
+                        v-if="element.question_type === 3"
+                        :label="element.label"
+                        :description="element.description"
+                        :required="element.required"
+                        :min="element.min_value"
+                        :max="element.max_value"
+                        :minLabel="element.min_label"
+                        :maxLabel="element.max_label"
+                      />
+                      <button @click="deleteQuestion(pageIndex, index)">X</button>
+                      <button @click="queueQuestionEdit(pageIndex, index)">Редактировать</button>
+                    </div>
                   </div>
                 </template>
               </draggable>
@@ -307,6 +315,7 @@ onMounted(async () => {
 
       &-card {
 
+
         &-textarea {
           width: 100% !important;
           background: var(--color-main-background);
@@ -330,7 +339,20 @@ onMounted(async () => {
         }
       }
     }
+
+    &-card {
+      padding-left: 10px;
+      display: flex;
+      align-items: center;
+      gap: 0 15px;
+
+      &-move {
+
+      }
+    }
   }
+
+
 
   &-ctrl-card {
     padding: 10px;
@@ -368,6 +390,22 @@ onMounted(async () => {
       //  background: #d0ffc6;
       //  border: 1px solid #52c042;
       //}
+    }
+  }
+}
+
+@media (max-width: 660px) {
+  .edit {
+    margin-bottom: 120px;
+
+    &-form {
+
+      &-container {
+        display: block;
+      }
+    }
+    &-ctrl-card {
+      display: none;
     }
   }
 }
