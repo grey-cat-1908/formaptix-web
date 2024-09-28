@@ -137,8 +137,6 @@ button {
   border-radius: 10rem;
 }
 
-
-
 ::selection {
   background: rgba(92, 139, 253, 0.1);
   text-shadow: none;

@@ -4,7 +4,7 @@
 import { getTitle } from '@/utils/env'
 import { useAuthStore } from '@/stores/auth'
 
-import {PhFilePlus, PhFloppyDisk, PhList, PhRowsPlusBottom} from '@phosphor-icons/vue'
+import { PhFilePlus, PhFloppyDisk, PhList, PhRowsPlusBottom } from '@phosphor-icons/vue'
 import { ref } from 'vue'
 import router from '@/router'
 
@@ -22,8 +22,12 @@ async function logout() {
   <div class="control">
     <div class="control-wrapper">
       <div class="control-card">
-        <button @click="showCreateDialog = true" class="control-card-button"><PhRowsPlusBottom :size="30" /></button>
-        <button @click="pages.push({ text: null, questions: [] })" class="control-card-button"><PhFilePlus :size="30" /></button>
+        <button @click="showCreateDialog = true" class="control-card-button">
+          <PhRowsPlusBottom :size="30" />
+        </button>
+        <button @click="pages.push({ text: null, questions: [] })" class="control-card-button">
+          <PhFilePlus :size="30" />
+        </button>
         <button @click="submitSave" class="control-card-button"><PhFloppyDisk :size="30" /></button>
       </div>
     </div>

@@ -11,9 +11,15 @@ import ScalePreview from '@/components/edit/ScalePreview.vue'
 import { makeAPIRequest } from '@/utils/http'
 import { useRoute } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
-import {PhDotsSixVertical, PhFilePlus, PhFloppyDisk, PhRowsPlusBottom, PhTrash} from "@phosphor-icons/vue";
+import {
+  PhDotsSixVertical,
+  PhFilePlus,
+  PhFloppyDisk,
+  PhRowsPlusBottom,
+  PhTrash
+} from '@phosphor-icons/vue'
 
-import EditControl from "@/components/EditControl.vue";
+import EditControl from '@/components/EditControl.vue'
 
 const route = useRoute()
 const authStore = useAuthStore()
@@ -106,9 +112,21 @@ onMounted(async () => {
     <div class="container">
       <div class="edit-form edit-form-container">
         <div class="default-card edit-ctrl-card hl-grey">
-          <button @click="showCreateDialog = true" class="edit-ctrl-card-btn edit-ctrl-card-btn--newa"><PhRowsPlusBottom :size="30" /></button>
-          <button @click="pages.push({ text: null, questions: [] })" class="edit-ctrl-card-btn edit-ctrl-card-btn--newp"><PhFilePlus :size="30" /></button>
-          <button @click="submitSave" class="edit-ctrl-card-btn edit-ctrl-card-btn--save"><PhFloppyDisk :size="30" /></button>
+          <button
+            @click="showCreateDialog = true"
+            class="edit-ctrl-card-btn edit-ctrl-card-btn--newa"
+          >
+            <PhRowsPlusBottom :size="30" />
+          </button>
+          <button
+            @click="pages.push({ text: null, questions: [] })"
+            class="edit-ctrl-card-btn edit-ctrl-card-btn--newp"
+          >
+            <PhFilePlus :size="30" />
+          </button>
+          <button @click="submitSave" class="edit-ctrl-card-btn edit-ctrl-card-btn--save">
+            <PhFloppyDisk :size="30" />
+          </button>
         </div>
         <div style="user-select: none" class="">
           <div class="default-card hl-main form-card-formtitle">
@@ -120,11 +138,21 @@ onMounted(async () => {
               <div class="edit-form-page">
                 <h2 class="form-title edit-form-page-title">
                   Страница {{ pageIndex + 1 }}
-                  <button @click="deletePage(pageIndex)" v-if="pages.length > 1" class="edit-form-page-delete"><PhTrash :size="32" /></button>
+                  <button
+                    @click="deletePage(pageIndex)"
+                    v-if="pages.length > 1"
+                    class="edit-form-page-delete"
+                  >
+                    <PhTrash :size="32" />
+                  </button>
                 </h2>
                 <div class="default-card hl-grey">
                   <h3 class="edit-form-title">Описание страницы</h3>
-                  <textarea placeholder="Описание" v-model="page.text" class="edit-form-page-card-textarea" />
+                  <textarea
+                    placeholder="Описание"
+                    v-model="page.text"
+                    class="edit-form-page-card-textarea"
+                  />
                 </div>
               </div>
               <draggable
@@ -134,10 +162,11 @@ onMounted(async () => {
                 :force-fallback="true"
                 group="questions"
                 :list="page.questions"
+                handle=".edit-form-card-move"
               >
                 <template #item="{ element, index }">
-                  <div class="default-card edit-form-card" style="cursor: move !important">
-                    <div class="edit-form-card-move">
+                  <div class="default-card edit-form-card">
+                    <div class="edit-form-card-move" style="cursor: move !important">
                       <PhDotsSixVertical :size="30" />
                     </div>
                     <div class="edit-form-card-main">
@@ -181,7 +210,6 @@ onMounted(async () => {
 
 <style scoped lang="scss">
 .fallbackStyleClass {
-  cursor: move !important;
   user-select: none !important;
 }
 
@@ -226,8 +254,8 @@ onMounted(async () => {
   border-radius: 0.5rem;
   outline: 0;
   transition:
-      border,
-      background 0.25s ease;
+    border,
+    background 0.25s ease;
 
   &:hover {
     border: 1px solid var(--color-secondary-border);
@@ -312,10 +340,7 @@ onMounted(async () => {
         }
       }
 
-
       &-card {
-
-
         &-textarea {
           width: 100% !important;
           background: var(--color-main-background);
@@ -325,8 +350,8 @@ onMounted(async () => {
           border-radius: 0.5rem;
           outline: 0;
           transition:
-              border,
-              background 0.25s ease;
+            border,
+            background 0.25s ease;
 
           &:hover {
             border: 1px solid var(--color-secondary-border);
@@ -347,12 +372,9 @@ onMounted(async () => {
       gap: 0 15px;
 
       &-move {
-
       }
     }
   }
-
-
 
   &-ctrl-card {
     padding: 10px;
@@ -399,7 +421,6 @@ onMounted(async () => {
     margin-bottom: 120px;
 
     &-form {
-
       &-container {
         display: block;
       }

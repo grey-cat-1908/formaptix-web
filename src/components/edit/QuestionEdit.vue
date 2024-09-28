@@ -182,7 +182,7 @@ async function submitForm() {
 </template>
 
 <style scoped lang="scss">
-@import "@/styles/form/view.scss";
+@import '@/styles/form/view.scss';
 .question {
   &-space {
     position: fixed;
