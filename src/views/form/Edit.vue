@@ -155,51 +155,53 @@ onMounted(async () => {
                   />
                 </div>
               </div>
-              <draggable
-                fallback-class="fallbackStyleClass"
-                ghost-class="ghost"
-                direction="vertical"
-                :force-fallback="true"
-                group="questions"
-                :list="page.questions"
-                handle=".edit-form-card-move"
-              >
-                <template #item="{ element, index }">
-                  <div class="default-card edit-form-card">
-                    <div class="edit-form-card-move" style="cursor: move !important">
-                      <PhDotsSixVertical :size="30" />
+              <div class="edit-form-cards-space">
+                <draggable
+                  fallback-class="fallbackStyleClass"
+                  ghost-class="ghost"
+                  direction="vertical"
+                  :force-fallback="true"
+                  group="questions"
+                  :list="page.questions"
+                  handle=".edit-form-card-move"
+                >
+                  <template #item="{ element, index }">
+                    <div class="default-card edit-form-card">
+                      <div class="edit-form-card-move" style="cursor: move !important">
+                        <PhDotsSixVertical :size="30" />
+                      </div>
+                      <div class="edit-form-card-main">
+                        <TextPreview
+                          v-if="element.question_type === 1"
+                          :label="element.label"
+                          :description="element.description"
+                          :required="element.required"
+                          :textarea="element.textarea"
+                        />
+                        <SelectorPreview
+                          v-if="element.question_type === 2"
+                          :label="element.label"
+                          :description="element.description"
+                          :required="element.required"
+                          :options="element.options"
+                        />
+                        <ScalePreview
+                          v-if="element.question_type === 3"
+                          :label="element.label"
+                          :description="element.description"
+                          :required="element.required"
+                          :min="element.min_value"
+                          :max="element.max_value"
+                          :minLabel="element.min_label"
+                          :maxLabel="element.max_label"
+                        />
+                        <button @click="deleteQuestion(pageIndex, index)">X</button>
+                        <button @click="queueQuestionEdit(pageIndex, index)">Редактировать</button>
+                      </div>
                     </div>
-                    <div class="edit-form-card-main">
-                      <TextPreview
-                        v-if="element.question_type === 1"
-                        :label="element.label"
-                        :description="element.description"
-                        :required="element.required"
-                        :textarea="element.textarea"
-                      />
-                      <SelectorPreview
-                        v-if="element.question_type === 2"
-                        :label="element.label"
-                        :description="element.description"
-                        :required="element.required"
-                        :options="element.options"
-                      />
-                      <ScalePreview
-                        v-if="element.question_type === 3"
-                        :label="element.label"
-                        :description="element.description"
-                        :required="element.required"
-                        :min="element.min_value"
-                        :max="element.max_value"
-                        :minLabel="element.min_label"
-                        :maxLabel="element.max_label"
-                      />
-                      <button @click="deleteQuestion(pageIndex, index)">X</button>
-                      <button @click="queueQuestionEdit(pageIndex, index)">Редактировать</button>
-                    </div>
-                  </div>
-                </template>
-              </draggable>
+                  </template>
+                </draggable>
+              </div>
             </div>
           </div>
         </div>
@@ -374,7 +376,19 @@ onMounted(async () => {
       &-move {
       }
     }
+
+    &-cards {
+
+      &-space > * {
+        display: flex;
+        flex-direction: column;
+        gap: 20px 0;
+        margin-top: 35px;
+      }
+    }
   }
+
+
 
   &-ctrl-card {
     padding: 10px;
