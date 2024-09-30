@@ -96,111 +96,115 @@ onMounted(async () => {
 </script>
 
 <template>
-  <EditControl />
-  <transition-group name="notification-appear">
-    <div class="notification" v-if="savedNotify">
-      <div class="save-success">Успешно сохранено!</div>
-    </div>
-  </transition-group>
-  <QuestionEdit v-if="showCreateDialog" @input="addNewQuestion($event)" />
-  <QuestionEdit
-    v-if="showEditDialog"
-    @input="editQuestion($event)"
-    :data="pages[currentPage].questions[currentQuestion]"
-  />
-  <div class="edit">
-    <div class="container">
-      <div class="edit-form edit-form-container">
-        <div class="default-card edit-ctrl-card hl-grey">
-          <button
-            @click="showCreateDialog = true"
-            class="edit-ctrl-card-btn edit-ctrl-card-btn--newa"
-          >
-            <PhRowsPlusBottom :size="30" />
-          </button>
-          <button
-            @click="pages.push({ text: null, questions: [] })"
-            class="edit-ctrl-card-btn edit-ctrl-card-btn--newp"
-          >
-            <PhFilePlus :size="30" />
-          </button>
-          <button @click="submitSave" class="edit-ctrl-card-btn edit-ctrl-card-btn--save">
-            <PhFloppyDisk :size="30" />
-          </button>
-        </div>
-        <div style="user-select: none" class="">
-          <div class="default-card hl-main form-card-formtitle">
-            <h3 class="view-form-q-title">Название формы</h3>
-            <input type="text" v-model="formName" class="default-input" />
+  <div class="">
+    <EditControl />
+    <transition-group name="notification-appear">
+      <div class="notification" v-if="savedNotify">
+        <div class="save-success">Успешно сохранено!</div>
+      </div>
+    </transition-group>
+    <QuestionEdit v-if="showCreateDialog" @input="addNewQuestion($event)" />
+    <QuestionEdit
+      v-if="showEditDialog"
+      @input="editQuestion($event)"
+      :data="pages[currentPage].questions[currentQuestion]"
+    />
+    <div class="edit">
+      <div class="container">
+        <div class="edit-form edit-form-container">
+          <div class="default-card edit-ctrl-card hl-grey">
+            <button
+              @click="showCreateDialog = true"
+              class="edit-ctrl-card-btn edit-ctrl-card-btn--newa"
+            >
+              <PhRowsPlusBottom :size="30" />
+            </button>
+            <button
+              @click="pages.push({ text: null, questions: [] })"
+              class="edit-ctrl-card-btn edit-ctrl-card-btn--newp"
+            >
+              <PhFilePlus :size="30" />
+            </button>
+            <button @click="submitSave" class="edit-ctrl-card-btn edit-ctrl-card-btn--save">
+              <PhFloppyDisk :size="30" />
+            </button>
           </div>
-          <div class="edit-form-page-space">
-            <div v-for="(page, pageIndex) in pages">
-              <div class="edit-form-page">
-                <h2 class="form-title edit-form-page-title">
-                  Страница {{ pageIndex + 1 }}
-                  <button
-                    @click="deletePage(pageIndex)"
-                    v-if="pages.length > 1"
-                    class="edit-form-page-delete"
-                  >
-                    <PhTrash :size="32" />
-                  </button>
-                </h2>
-                <div class="default-card hl-grey">
-                  <h3 class="edit-form-title">Описание страницы</h3>
-                  <textarea
-                    placeholder="Описание"
-                    v-model="page.text"
-                    class="edit-form-page-card-textarea"
-                  />
+          <div style="user-select: none" class="">
+            <div class="default-card hl-main form-card-formtitle">
+              <h3 class="view-form-q-title">Название формы</h3>
+              <input type="text" v-model="formName" class="default-input" />
+            </div>
+            <div class="edit-form-page-space">
+              <div v-for="(page, pageIndex) in pages">
+                <div class="edit-form-page">
+                  <h2 class="form-title edit-form-page-title">
+                    Страница {{ pageIndex + 1 }}
+                    <button
+                      @click="deletePage(pageIndex)"
+                      v-if="pages.length > 1"
+                      class="edit-form-page-delete"
+                    >
+                      <PhTrash :size="32" />
+                    </button>
+                  </h2>
+                  <div class="default-card hl-grey">
+                    <h3 class="edit-form-title">Описание страницы</h3>
+                    <textarea
+                      placeholder="Описание"
+                      v-model="page.text"
+                      class="edit-form-page-card-textarea"
+                    />
+                  </div>
                 </div>
-              </div>
-              <div class="edit-form-cards-space">
-                <draggable
-                  fallback-class="fallbackStyleClass"
-                  ghost-class="ghost"
-                  direction="vertical"
-                  :force-fallback="true"
-                  group="questions"
-                  :list="page.questions"
-                  handle=".edit-form-card-move"
-                >
-                  <template #item="{ element, index }">
-                    <div class="default-card edit-form-card">
-                      <div class="edit-form-card-move" style="cursor: move !important">
-                        <PhDotsSixVertical :size="30" />
+                <div class="edit-form-cards-space">
+                  <draggable
+                    fallback-class="fallbackStyleClass"
+                    ghost-class="ghost"
+                    direction="vertical"
+                    :force-fallback="true"
+                    group="questions"
+                    :list="page.questions"
+                    handle=".edit-form-card-move"
+                  >
+                    <template #item="{ element, index }">
+                      <div class="default-card edit-form-card">
+                        <div class="edit-form-card-move" style="cursor: move !important">
+                          <PhDotsSixVertical :size="30" />
+                        </div>
+                        <div class="edit-form-card-main">
+                          <TextPreview
+                            v-if="element.question_type === 1"
+                            :label="element.label"
+                            :description="element.description"
+                            :required="element.required"
+                            :textarea="element.textarea"
+                          />
+                          <SelectorPreview
+                            v-if="element.question_type === 2"
+                            :label="element.label"
+                            :description="element.description"
+                            :required="element.required"
+                            :options="element.options"
+                          />
+                          <ScalePreview
+                            v-if="element.question_type === 3"
+                            :label="element.label"
+                            :description="element.description"
+                            :required="element.required"
+                            :min="element.min_value"
+                            :max="element.max_value"
+                            :minLabel="element.min_label"
+                            :maxLabel="element.max_label"
+                          />
+                          <button @click="deleteQuestion(pageIndex, index)">X</button>
+                          <button @click="queueQuestionEdit(pageIndex, index)">
+                            Редактировать
+                          </button>
+                        </div>
                       </div>
-                      <div class="edit-form-card-main">
-                        <TextPreview
-                          v-if="element.question_type === 1"
-                          :label="element.label"
-                          :description="element.description"
-                          :required="element.required"
-                          :textarea="element.textarea"
-                        />
-                        <SelectorPreview
-                          v-if="element.question_type === 2"
-                          :label="element.label"
-                          :description="element.description"
-                          :required="element.required"
-                          :options="element.options"
-                        />
-                        <ScalePreview
-                          v-if="element.question_type === 3"
-                          :label="element.label"
-                          :description="element.description"
-                          :required="element.required"
-                          :min="element.min_value"
-                          :max="element.max_value"
-                          :minLabel="element.min_label"
-                          :maxLabel="element.max_label"
-                        />
-                        <button @click="deleteQuestion(pageIndex, index)">X</button>
-                        <button @click="queueQuestionEdit(pageIndex, index)">Редактировать</button>
-                      </div>
-                    </div>
-                  </template>
-                </draggable>
+                    </template>
+                  </draggable>
+                </div>
               </div>
             </div>
           </div>
@@ -378,7 +382,6 @@ onMounted(async () => {
     }
 
     &-cards {
-
       &-space > * {
         display: flex;
         flex-direction: column;
@@ -387,8 +390,6 @@ onMounted(async () => {
       }
     }
   }
-
-
 
   &-ctrl-card {
     padding: 10px;

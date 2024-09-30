@@ -2,10 +2,10 @@
   <div class="root" id="root">
     <Auth />
     <Header />
-    <router-view v-slot="{ Component }" :key="$route.fullPath">
+    <router-view v-slot="{ Component, route }">
       <div class="layout">
         <transition name="page" mode="out-in">
-          <component :is="Component" />
+          <component :is="Component" v-if="authStore.isReady" :key="route.fullPath" />
         </transition>
       </div>
     </router-view>
@@ -16,6 +16,9 @@
 // @ts-nocheck
 import Header from '@/components/Header.vue'
 import Auth from '@/components/Auth.vue'
+
+import { useAuthStore } from '@/stores/auth'
+const authStore = useAuthStore()
 </script>
 
 <style scoped>
@@ -27,6 +30,7 @@ import Auth from '@/components/Auth.vue'
   transition-property: opacity;
   overflow: hidden;
 }
+
 .page-enter-from,
 .page-leave-to {
   opacity: 0;

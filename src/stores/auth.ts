@@ -4,6 +4,7 @@ import { defineStore } from 'pinia'
 import { makeAPIRequest } from '@/utils/http'
 
 export const useAuthStore = defineStore('auth', () => {
+  const isReady = ref(false)
   const authDialogOpened = ref(false)
   const isAuthorized = ref(false)
 
@@ -13,10 +14,12 @@ export const useAuthStore = defineStore('auth', () => {
   })
 
   const prepareStore = async () => {
+    isReady.value = false
     if (localStorage.getItem('auth_token')) {
       const data = await makeAPIRequest('/user/get', 'POST', {}, {}, true)
       if (data.status !== 200) {
         localStorage.removeItem('auth_token')
+        isReady.value = true
         return (isAuthorized.value = false)
       } else {
         isAuthorized.value = true
@@ -28,9 +31,11 @@ export const useAuthStore = defineStore('auth', () => {
     } else {
       isAuthorized.value = false
     }
+    isReady.value = true
   }
 
   const logout = () => {
+    isReady.value = false
     localStorage.removeItem('auth_token')
     isAuthorized.value = false
     authDialogOpened.value = false
@@ -38,8 +43,9 @@ export const useAuthStore = defineStore('auth', () => {
       id: 0,
       username: ''
     }
+    isReady.value = true
   }
 
   prepareStore()
-  return { authDialogOpened, isAuthorized, user, prepareStore, logout }
+  return { authDialogOpened, isReady, isAuthorized, user, prepareStore, logout }
 })

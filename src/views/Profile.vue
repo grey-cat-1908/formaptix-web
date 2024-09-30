@@ -13,16 +13,12 @@ const userForms = ref([])
 import { PhEye, PhInfo, PhPen, PhPencil, PhTrash, PhUserList } from '@phosphor-icons/vue'
 
 onMounted(async () => {
-  await authStore.prepareStore()
-  if (!authStore.isAuthorized) {
+  const formResponse = await makeAPIRequest('/form/list', 'GET', {}, {}, true)
+  if (!formResponse.json || formResponse.status !== 200) {
     await router.push('/')
-  } else {
-    const formResponse = await makeAPIRequest('/form/list', 'GET', {}, {}, true)
-    if (!formResponse.json || formResponse.status !== 200) {
-      return
-    }
-    userForms.value = formResponse.json.forms
+    return
   }
+  userForms.value = formResponse.json.forms
 })
 
 async function deleteForm(index: Number) {

@@ -28,9 +28,11 @@ const props = defineProps({
 })
 const emit = defineEmits(['input'])
 const data = ref({})
+const old = ref({})
 
 onMounted(() => {
   data.value = { ...props.data }
+  old.value = data.value
 })
 
 async function submitForm() {
@@ -51,6 +53,7 @@ async function submitForm() {
     if (data.value.max_value < 2 || data.value.max_value > 10) return
   }
 
+  old.value = data.value
   emit('input', data.value)
 }
 </script>
@@ -63,7 +66,7 @@ async function submitForm() {
         <div class="question-card-title">
           <h3 class="question-card-title--text">Редактирование вопроса</h3>
           <button @click="">
-            <PhX class="question-card-title--btn" :size="30" />
+            <PhX class="question-card-title--btn" :size="30" @click="emit('input', old)" />
           </button>
         </div>
         <form @submit.prevent="submitForm" class="question-card-content">

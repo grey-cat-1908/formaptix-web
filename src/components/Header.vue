@@ -30,9 +30,9 @@ async function logout() {
         </div>
         <div class="header-column header--toggled" :class="{ active: isToggled }">
           <div v-if="authStore.isAuthorized" class="header-authed">
-            <button class="header-nickname" type="button" @click="$router.push('/profile')">
+            <router-link class="header-nickname" to="/profile">
               {{ authStore.user.username }}
-            </button>
+            </router-link>
             <button class="default-button header-leave-btn" type="button" @click="logout">
               Выйти
             </button>
